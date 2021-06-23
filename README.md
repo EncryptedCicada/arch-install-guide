@@ -1,2 +1,3 @@
-# arch-rice
-WIP repo for my Arch rice
+# Arch Linux rice
+
+* Based on Sway
