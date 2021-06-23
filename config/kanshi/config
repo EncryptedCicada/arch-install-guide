@@ -1,0 +1,7 @@
+{
+	output eDP-1 enable mode 1920x1080@120Hz position 0,0
+}
+
+{
+	output Virtual-1 enable mode 1920x1080@60Hz position 0,0
+}
