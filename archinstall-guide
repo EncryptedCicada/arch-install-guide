@@ -44,6 +44,7 @@ pacstrap /mnt base linux linux-firmware btrfs-progs
 genfstab -L -p /mnt >> /mnt/etc/fstab
 #Check fstab
 cat /mnt/etc/fstab
+NOTE:Keep the root partition's UUID mentioned in fstab handy to be able to plug them in when adding loaders for systemd-boot
 
 #Chroot into installed system
 arch-chroot /mnt /bin/bash
@@ -104,12 +105,61 @@ mkdir Downloads Documents Videos Pictures
 #Install WM of choice
 pacman -S sway dmenu
 
+#Install graphics drivers
+pacman -S mesa
+
 #OPTIONAL(If you're installing a full-blown desktop environment like Gnome, sometimes GDM doesn't start automatically. For amdgpu users this is the fix)
 nano /etc/mkinitcpio.conf
 #Edit the line that says MODULES=() and add the following in the beginning just after the bracket:
 amdgpu
 #The edited line shound look somethng like this:
 MODULES=(amdgpu ...)
+
+#Installing systemd-boot bootloader
+bootctl install
+
+#Configuring loader
+nano /boot/loader/loader.conf
+**Add the following lines to the file(excluding asterisks. It defines the EOF)
+default archlinux.conf
+editor no
+auto-entries 1
+auto-firmware 1
+console-mode max
+**
+TIP:A basic loader configuration file is located at /usr/share/systemd/bootctl/loader.conf
+
+#Adding loaders
+cd /boot/loader/entries
+#This will create 2 files: archlinux.conf and archlinux-fallback.conf
+touch archlinux.conf archlinux-fallback.conf
+nano archlinux.conf
+**Add the following lines to the file(excluding asterisks. It defines the EOF)
+# Created by Mamba
+title Arch Linux
+linux /vmlinuz-linux
+initrd /amd-ucode.img
+initrd /initramfs-linux.img
+options root=PARTUUID={UUID of system partition obtained earlier without brackets} rw
+**
+
+nano archlinux-fallback.conf
+**Add the following lines to the file(excluding asterisks. It defines the EOF)
+# Created by Mamba
+title Arch Linux (fallback initramfs)
+linux   /vmlinuz-linux
+initrd  /amd-ucode.img
+initrd  /initramfs-linux-fallback.img
+options root=PARTUUID={UUID of system partition obtained earlier without brackets} rw
+**
+TIP:An example entry file is located at /usr/share/systemd/bootctl/arch.conf
+
+#For quiet boot add the following to the options line in the loader after 'rw'
+quiet loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+#The line should look something like this:
+options root=PARTUUID=58004e6b-c0ae-134f-bc93-c319667025f5 rw quiet loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+
+#More on updating systemd-boot when systemd gets updated towards the EOF
 
 #To exit chroot, type: (optionally do ctrl+d)
 exit
@@ -124,3 +174,11 @@ reboot
 #For people who wish to disable password for root account just follow this step:
 sudo usermod -p '!' root
 #this sets root to have a disabled password
+
+#Install an AUR helper like paru to help installing packages form AUR
+cd /home/mamba/Downloads
+git clone https://aur.archlinux.org/paru-bin.git
+cd paru-bin
+makepkg -si
+
+#To enable updating systemd-boot when systemd gets updated with a pacman hook install the package systemd-boot-pacman-hook from the AUR
