@@ -188,3 +188,4 @@ cd paru-bin
 makepkg -si
 
 #To enable updating systemd-boot when systemd gets updated with a pacman hook install the package systemd-boot-pacman-hook from the AUR
+#include <post-install>
