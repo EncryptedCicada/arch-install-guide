@@ -219,7 +219,7 @@ bindsym $mod+r mode "resize"
 #Personal settings
 focus_follows_mouse no
 gaps inner 5
-gaps outer 5
+#gaps outer 5
 default_border pixel 1
 
 #Waybar
