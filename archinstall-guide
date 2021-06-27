@@ -23,7 +23,7 @@ swapon -L swap
 #Format system partition as btrfs and create subvolumes
 mkfs.btrfs --force --label system /dev/disk/by-partlabel/system
 o=defaults,x-mount.mkdir
-o_btrfs=$o,compress=lzo,ssd,noatime
+o_btrfs=$o,compress=zstd,ssd,noatime,nodiratime
 mount -t btrfs LABEL=system /mnt
 btrfs subvolume create /mnt/root
 btrfs subvolume create /mnt/home
