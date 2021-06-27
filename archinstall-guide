@@ -25,20 +25,22 @@ mkfs.btrfs --force --label system /dev/disk/by-partlabel/system
 o=defaults,x-mount.mkdir
 o_btrfs=$o,compress=zstd,ssd,noatime,nodiratime
 mount -t btrfs LABEL=system /mnt
-btrfs subvolume create /mnt/root
-btrfs subvolume create /mnt/home
-btrfs subvolume create /mnt/snapshots
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@var
+btrfs subvolume create /mnt/@snapshots
 umount -R /mnt
-mount -t btrfs -o subvol=root,$o_btrfs LABEL=system /mnt
-mount -t btrfs -o subvol=home,$o_btrfs LABEL=system /mnt/home
-mount -t btrfs -o subvol=snapshots,$o_btrfs LABEL=system /mnt/.snapshots
+mount -o subvol=@,compress=zstd,ssd,noatime,nodiratime LABEL=system /mnt
+mkdir /mnt/{boot,home,var,.snapshots}
+mount -o subvol=@home,compress=zstd,ssd,noatime,nodiratime LABEL=system /mnt/home
+mount -o subvol=@var,compress=zstd,ssd,noatime,nodiratime LABEL=system /mnt/var
+mount -o subvol=@snapshots,compress=zstd,ssd,noatime,nodiratime LABEL=system /mnt/.snapshots
 
-#Make and mount boot partition
-mkdir /mnt/boot
+#Mount boot partition
 mount LABEL=EFI /mnt/boot
 
 #Install base system
-pacstrap /mnt base linux linux-firmware btrfs-progs wpa_supplicant
+pacstrap /mnt base linux linux-firmware btrfs-progs wpa_supplicant networkmanager mkinitcpio neovim sudo nano git
 
 #Generate fstab
 genfstab -L -p /mnt >> /mnt/etc/fstab
@@ -52,19 +54,15 @@ arch-chroot /mnt /bin/bash
 
 #THE FOLLOWING COMMANDS ARE RUN IN CHROOT!!!
 
-
+#Timezone and clock
 ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
-
 hwclock --systohc
 
-#Install some necessary packages, for example:
-pacman -S nano git
-
-#Edit /etc/locale.gen and uncomment en_IN UTF-8 and other needed locales. Generate the locales by running:
+#Edit /etc/locale.gen and uncomment en_US.UTF-8 and other needed locales. Generate the locales by running:
 locale-gen
 
 #Create the locale.conf (/etc/locale.conf) file, and set the LANG variable accordingly:
-LANG=en_IN
+LANG=en_US.UTF8
 
 #Set hostname and setup /etc/hosts file
 echo MechyMamba > /etc/hostname
@@ -75,15 +73,18 @@ nano /etc/hosts
 127.0.1.1       MechyMamba.localhost  MechyMamba
 ******END OF FILE******
 
+#Enable network connection
+systemctl enable NetworkManager
+
+#Enable ntp client
+systemctl enable systemd-timesyncd
+
 #Setup root passwd (Process to disable root password at near the EOF)
 passwd
 
 #Add user
-useradd -m -G wheel mamba
-passwd mamba
-
-#Install sudo
-pacman -S sudo
+useradd -m -G wheel cicada
+passwd cicada
 
 #Edit the sudoers file to give access to added user for elevated previlidges (uncomment # %wheel ALL=(ALL) ALL)
 EDITOR=nano visudo
@@ -140,28 +141,28 @@ cd /boot/loader/entries
 touch archlinux.conf archlinux-fallback.conf
 nano archlinux.conf
 **Add the following lines to the file(excluding asterisks. It defines the EOF)
-# Created by Mamba
+# Created by EncryptedCicada
 title Arch Linux
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd /initramfs-linux.img
-options root=PARTUUID={UUID of system partition obtained earlier without brackets} rw
+options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 **
 
 nano archlinux-fallback.conf
 **Add the following lines to the file(excluding asterisks. It defines the EOF)
-# Created by Mamba
+# Created by EncryptedCicada
 title Arch Linux (fallback initramfs)
 linux   /vmlinuz-linux
 initrd  /amd-ucode.img
 initrd  /initramfs-linux-fallback.img
-options root=PARTUUID={UUID of system partition obtained earlier without brackets} rw rootflags=subvol=root quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 **
 TIP:An example entry file is located at /usr/share/systemd/bootctl/arch.conf
 
 #For quiet boot add the following to the options line in the loader after 'rw'
 quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
-#The line should look something like this:
+#The line could also look something like this:
 options root=PARTUUID=58004e6b-c0ae-134f-bc93-c319667025f5 rw quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 
 #More on updating systemd-boot when systemd gets updated towards the EOF
