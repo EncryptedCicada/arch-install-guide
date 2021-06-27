@@ -1,0 +1,8 @@
+#These are my steps to achieve my personal setup
+
+#Get rice packages
+pacman -S alacritty wofi waybar
+
+#Install ly-A TUI based login manager
+paru -S ly
+sudo systemctl enable ly.service
