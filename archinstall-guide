@@ -38,7 +38,7 @@ mkdir /mnt/boot
 mount LABEL=EFI /mnt/boot
 
 #Install base system
-pacstrap /mnt base linux linux-firmware btrfs-progs
+pacstrap /mnt base linux linux-firmware btrfs-progs wpa_supplicant
 
 #Generate fstab
 genfstab -L -p /mnt >> /mnt/etc/fstab
@@ -115,8 +115,13 @@ amdgpu
 #The edited line shound look somethng like this:
 MODULES=(amdgpu ...)
 
+#Edit the mkinitcpio.conf file like earlier and add btrfs to the HOOKS=(...)
+HOOKS=(... btrfs filesystems ...)
+#Generate
+mkinitcpio -p linux
+
 #Installing systemd-boot bootloader
-bootctl install
+bootctl --path=/boot install
 
 #Configuring loader
 nano /boot/loader/loader.conf
@@ -150,14 +155,14 @@ title Arch Linux (fallback initramfs)
 linux   /vmlinuz-linux
 initrd  /amd-ucode.img
 initrd  /initramfs-linux-fallback.img
-options root=PARTUUID={UUID of system partition obtained earlier without brackets} rw
+options root=PARTUUID={UUID of system partition obtained earlier without brackets} rw rootflags=subvol=root quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 **
 TIP:An example entry file is located at /usr/share/systemd/bootctl/arch.conf
 
 #For quiet boot add the following to the options line in the loader after 'rw'
-quiet loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 #The line should look something like this:
-options root=PARTUUID=58004e6b-c0ae-134f-bc93-c319667025f5 rw quiet loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+options root=PARTUUID=58004e6b-c0ae-134f-bc93-c319667025f5 rw quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 
 #More on updating systemd-boot when systemd gets updated towards the EOF
 
