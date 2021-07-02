@@ -153,9 +153,9 @@ nano archlinux-fallback.conf
 **Add the following lines to the file(excluding asterisks. It defines the EOF)
 # Created by EncryptedCicada
 title Arch Linux (fallback initramfs)
-linux   /vmlinuz-linux
-initrd  /amd-ucode.img
-initrd  /initramfs-linux-fallback.img
+linux /vmlinuz-linux
+initrd /amd-ucode.img
+initrd /initramfs-linux-fallback.img
 options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 **
 TIP:An example entry file is located at /usr/share/systemd/bootctl/arch.conf
