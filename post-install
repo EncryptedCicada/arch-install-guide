@@ -1,8 +1,48 @@
 #These are my steps to achieve my personal setup
 
-#Get rice packages
-pacman -S alacritty wofi waybar
+#Install an AUR helper like paru to help installing packages form AUR
+cd /home/mamba/Downloads
+git clone https://aur.archlinux.org/paru-bin.git
+cd paru-bin
+makepkg -si
+#Run the following command after the pervious process is completed
+paru -gendb
 
-#Install ly-A TUI based login manager
-paru -S ly
-sudo systemctl enable ly.service
+#Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
+
+#Get necessary packages
+paru -S brave-bin gnome-tweaks chrome-gnome-shell ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon oh-my-bash-git android-tools
+
+#To setup plymouth:
+paru -S plymouth-git gdm-plymouth
+#Append plymouth to the HOOKS in /etc/mkinitcpio.conf after base and udev for it to function
+sudo nvim /etc/mkinitcpio.conf
+******example
+HOOKS=(base udev plymouth ...)
+******
+#Install extra plymouth themes from AUR, for example:
+paru -S apple-mac-plymouth-git
+#See all installed themes with:
+plymouth-set-default-theme -l
+#Change the default theme(spinner) with something else by editing the plymouth.conf located in /etc/plymouth/plymouth.conf to your theme listed by the previous command:
+sudo nvim /etc/plymouth/plymouth.conf
+******example
+[Daemon]
+Theme=apple-mac-plymouth
+ShowDelay=0
+DeviceTimeout=8
+******
+#initrd must be regenerated after changing the theme for it to take affect with the following command (change apple-mac-plymouth to the theme you're setting):
+sudo plymouth-set-default-theme -R apple-mac-plymouth
+NOTE: On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set ShowDelay to an interval (in seconds) longer than your boot time to prevent this flicker and only show a blank screen.
+
+#To add and work with extensions on gnome
+#First install the native connector for extentions to work with:
+paru -S chrome-gnome-shell
+#Add extension to chrome/chromium based browsers like brave from https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep
+#Go to extentions.gnome.org to add extentions to gnome
+#My personally curated extensions (add one at a time and click install when prompted):
+1. blur-my-shell
+2. just-perfection
+3. espresso
+#Visit github pages of respective extensions to know more
