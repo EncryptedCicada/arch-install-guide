@@ -58,11 +58,13 @@ arch-chroot /mnt /bin/bash
 ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 hwclock --systohc
 
-#Edit /etc/locale.gen and uncomment en_US.UTF-8 and other needed locales. Generate the locales by running:
+#Edit /etc/locale.gen and uncomment en_IN, en_GB.UTF8 and other needed locales. Generate the locales by running:
 locale-gen
 
 #Create the locale.conf (/etc/locale.conf) file, and set the LANG variable accordingly:
-LANG=en_US.UTF8
+LANG=en_IN.UTF-8
+LANGUAGE=en_IN:en_GB:en
+LC_TIME=en_IN.UTF-8
 
 #Set hostname and setup /etc/hosts file
 echo MechyMamba > /etc/hostname
