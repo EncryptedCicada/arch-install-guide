@@ -46,6 +46,7 @@ If you're not interested in adding the boot parameter you may want to enable Sys
 - [ ] Add screenshots
 - [ ] Expand the guide to cover more tweaks and improvements.
   - [ ] Add instructions to enable native wayland support in browsers
+  - [ ] Include bash prompt customisation instructions (using oh-my-bash)
 
 ## Disclaimer:warning:
 This guide presumes that the user will be thorough with the text before beginning to execute the guide. If you think it's gonna mess up if u execute a random command, chances are it will actually mess everything up. Be careful with your keystrokes! I am, in no way responsible for the harm done to your PC due to not following the guide correctly and/or modifying the contents of the guide for personal use without prior knowledge of the consequences. That being said, this guide has been personally tested to account for any errors and I've successfully built my system using this guide. If there are any mistakes or errors in the guide, please open an issue for the same.
