@@ -43,8 +43,8 @@ If you're not interested in adding the boot parameter you may want to enable Sys
   * Some Dell users of XPS and inspiron series and/or devices of other vendors on older uefi firmware may not be able to run linux. The problem is with how the firmware handles the disk drives. This may/maynot be solved with a bios update.
 
 ## Todo
-* [ ]Add screenshots
-* [ ]Expand the guide to cover more tweaks and improvements.
+- [ ] Add screenshots
+- [ ] Expand the guide to cover more tweaks and improvements.
 
-## Disclaimer:
+## Disclaimer:warning::
 This guide presumes that the user will be thorough with the text before beginning to execute the guide. If you think it's gonna mess up if u execute a random command, chances are it will actually mess everything up. Be careful with your keystrokes! I am, in no way responsible for the harm done to your PC due to not following the guide correctly and/or modifying the contents of the guide for personal use without prior knowledge of the consequences. That being said, this guide has been personally tested to account for any errors and I've successfully built my system using this guide. If there are any mistakes or errors in the guide, please open an issue for the same.
