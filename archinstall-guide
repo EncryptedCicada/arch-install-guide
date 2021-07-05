@@ -96,20 +96,15 @@ EDITOR=nano visudo
 ******Save the file******
 
 #Install other necessary packages
-pacman -S pipewire pipewire-alsa pipewire-pulse cups ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra bash-completion amd-ucode curl wget
+pacman -S pipewire pipewire-alsa pipewire-pulse cups ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra bash-completion amd-ucode curl wget x
 
 #Enable CUPS socket detection
 systemctl enable cups.socket
 
-#Create default directories
-cd home/mamba/
-mkdir Downloads Documents Videos Pictures
-
-#Install WM of choice
-pacman -S sway dmenu
-
+#Install WM/DM of choice
+pacman -S gnome
 #Install graphics drivers
-pacman -S mesa
+pacman -S mesa vulkan-radeon libva-mesa-driver mesa-vdpau
 
 #OPTIONAL(If you're installing a full-blown desktop environment like Gnome, sometimes GDM doesn't start automatically. For amdgpu users this is the fix)
 nano /etc/mkinitcpio.conf
@@ -182,12 +177,6 @@ reboot
 #For people who wish to disable password for root account just follow this step:
 sudo usermod -p '!' root
 #this sets root to have a disabled password
-
-#Install an AUR helper like paru to help installing packages form AUR
-cd /home/mamba/Downloads
-git clone https://aur.archlinux.org/paru-bin.git
-cd paru-bin
-makepkg -si
 
 #To enable updating systemd-boot when systemd gets updated with a pacman hook install the package systemd-boot-pacman-hook from the AUR
 #include <post-install>
