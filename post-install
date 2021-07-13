@@ -24,8 +24,8 @@ HOOKS=(base udev plymouth ...)
 paru -S apple-mac-plymouth-git
 #See all installed themes with:
 plymouth-set-default-theme -l
-#Change the default theme(spinner) with something else by editing the plymouth.conf located in /etc/plymouth/plymouth.conf to your theme listed by the previous command:
-sudo nvim /etc/plymouth/plymouth.conf
+#Change the default theme(spinner) with something else by editing the plymouthd.conf located in /etc/plymouth/ to your theme listed by the previous command:
+sudo nvim /etc/plymouth/plymouthd.conf
 ******example
 [Daemon]
 Theme=apple-mac-plymouth
