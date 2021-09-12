@@ -30,7 +30,7 @@ btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
 btrfs subvolume create /mnt/@snapshots
 umount -R /mnt
-mount -o subvol=@,compress=zstd,ssd,noatime,nodiratime LABEL=system /mnt
+mount -o subvol=@,$o_btrfs LABEL=system /mnt
 mkdir /mnt/{boot,home,var,.snapshots}
 mount -o subvol=@home,$o_btrfs LABEL=system /mnt/home
 mount -o subvol=@var,$o_btrfs LABEL=system /mnt/var
