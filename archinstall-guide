@@ -40,7 +40,7 @@ mount -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/.snapshots
 mount LABEL=EFI /mnt/boot
 
 #Install base system
-pacstrap /mnt base linux linux-firmware btrfs-progs wpa_supplicant networkmanager mkinitcpio neovim sudo nano git base-devel
+pacstrap /mnt base linux linux-firmware linux-headers btrfs-progs wpa_supplicant networkmanager mkinitcpio neovim sudo nano git base-devel
 
 #Generate fstab
 genfstab -L -p /mnt >> /mnt/etc/fstab
