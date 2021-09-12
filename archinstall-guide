@@ -47,6 +47,7 @@ genfstab -L -p /mnt >> /mnt/etc/fstab
 #Check fstab
 cat /mnt/etc/fstab
 NOTE:Keep the root partition's UUID mentioned in fstab handy to be able to plug them in when adding loaders for systemd-boot
+NOTE-1:The above note is now redundant as I've added an easier way to setup the loader later in the guide. It will stay to keep the user informed of the information in case something goes wrong.)
 
 #Chroot into installed system
 arch-chroot /mnt /bin/bash
@@ -58,7 +59,7 @@ arch-chroot /mnt /bin/bash
 ln -s /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
 hwclock --systohc
 
-#Edit /etc/locale.gen and uncomment en_IN, en_GB.UTF8 and other needed locales. Generate the locales by running:
+#Edit /etc/locale.gen and uncomment en_IN, en_GB.UTF8 and other needed locales (My locales are India specific and fallback locale is UK Eng, please google your own locales). Generate the locales by running:
 locale-gen
 
 #Create the locale.conf (/etc/locale.conf) file, and set the LANG variable accordingly:
@@ -82,6 +83,7 @@ systemctl enable NetworkManager
 systemctl enable systemd-timesyncd
 
 #Setup root passwd (Process to disable root password at near the EOF)
+NOTE: Some people including me can skip this step if they don't want to setup a password for root account. Some distros like Ubuntu do this by default to prevent newbies from breaking the system and to prevent root exploits. This guide still covers steps to provide elevated privilege to the standard user using sudo.
 passwd
 
 #Add user
@@ -160,7 +162,7 @@ TIP:An example entry file is located at /usr/share/systemd/bootctl/arch.conf
 #For quiet boot add the following to the options line in the loader after 'rw'
 quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 #The line could also look something like this:
-options root=PARTUUID=58004e6b-c0ae-134f-bc93-c319667025f5 rw quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+options root="LABEL=system" rw quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
 
 #More on updating systemd-boot when systemd gets updated towards the EOF
 
