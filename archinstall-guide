@@ -145,7 +145,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd /initramfs-linux.img
-options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3 vt.global_cursor_default=0
 **
 
 nano archlinux-fallback.conf
@@ -155,14 +155,14 @@ title Arch Linux (fallback initramfs)
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd /initramfs-linux-fallback.img
-options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3 vt.global_cursor_default=0
 **
 TIP:An example entry file is located at /usr/share/systemd/bootctl/arch.conf
 
 #For quiet boot add the following to the options line in the loader after 'rw'
-quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3
 #The line could also look something like this:
-options root="LABEL=system" rw quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3
+options root="LABEL=system" rw quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3 vt.global_cursor_default=0
 
 #More on updating systemd-boot when systemd gets updated towards the EOF
 
