@@ -11,7 +11,9 @@ paru -gendb
 #Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
 
 #Get necessary packages
-paru -S brave-bin gnome-tweaks chrome-gnome-shell ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon oh-my-bash-git android-tools
+paru -S reflector-simple brave-bin gnome-tweaks chrome-gnome-shell ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon oh-my-bash-git android-tools
+
+#Open and run reflector-simple
 
 #To setup plymouth:
 paru -S plymouth-git gdm-plymouth
