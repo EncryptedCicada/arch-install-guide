@@ -11,9 +11,10 @@ paru -gendb
 #Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
 
 #Get necessary packages
-paru -S reflector-simple brave-bin gnome-tweaks chrome-gnome-shell ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon oh-my-bash-git android-tools
+paru -S reflector-simple timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
+#Now open and run reflector-simple and refresh mirrors
 
-#Open and run reflector-simple
+#Open timeshift and complete the initial setup
 
 #To setup plymouth:
 paru -S plymouth-git gdm-plymouth
@@ -23,19 +24,19 @@ sudo nvim /etc/mkinitcpio.conf
 HOOKS=(base udev plymouth ...)
 ******
 #Install extra plymouth themes from AUR, for example:
-paru -S apple-mac-plymouth-git
+paru -S plymouth-theme-sweet-arch-git
 #See all installed themes with:
 plymouth-set-default-theme -l
 #Change the default theme(spinner) with something else by editing the plymouthd.conf located in /etc/plymouth/ to your theme listed by the previous command:
 sudo nvim /etc/plymouth/plymouthd.conf
 ******example
 [Daemon]
-Theme=apple-mac-plymouth
+Theme=plymouth-theme-sweet-arch
 ShowDelay=0
 DeviceTimeout=8
 ******
 #initrd must be regenerated after changing the theme for it to take affect with the following command (change apple-mac-plymouth to the theme you're setting):
-sudo plymouth-set-default-theme -R apple-mac-plymouth
+sudo plymouth-set-default-theme -R plymouth-theme-sweet-arch
 NOTE: On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set ShowDelay to an interval (in seconds) longer than your boot time to prevent this flicker and only show a blank screen.
 
 #To add and work with extensions on gnome
