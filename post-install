@@ -31,12 +31,12 @@ plymouth-set-default-theme -l
 sudo nvim /etc/plymouth/plymouthd.conf
 ******example
 [Daemon]
-Theme=plymouth-theme-sweet-arch
+Theme=sweet-arch
 ShowDelay=0
 DeviceTimeout=8
 ******
 #initrd must be regenerated after changing the theme for it to take affect with the following command (change apple-mac-plymouth to the theme you're setting):
-sudo plymouth-set-default-theme -R plymouth-theme-sweet-arch
+sudo plymouth-set-default-theme -R sweet-arch
 NOTE: On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set ShowDelay to an interval (in seconds) longer than your boot time to prevent this flicker and only show a blank screen.
 
 #To add and work with extensions on gnome
