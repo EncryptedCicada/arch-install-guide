@@ -184,7 +184,7 @@ options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.sy
 nano archlinux-fallback.conf
 **Add the following lines to the file(excluding asterisks. It defines the EOF)
 # Created by EncryptedCicada
-title Arch Linux (fallback initramfs)
+title Arch Linux Zen (fallback initramfs)
 linux /vmlinuz-linux-zen
 initrd /amd-ucode.img
 initrd /initramfs-linux-zen-fallback.img
