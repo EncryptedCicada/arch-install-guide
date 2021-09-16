@@ -2,6 +2,11 @@
 #Created by EncryptedCicada on 26 Jun 2021
 #Info adapted from Arch Wiki and various other sources
 
+#The default keyboard layout/console keymap is US. If you don't want to change the default, skip this step. If you want to list all available keymaps do:
+ls /usr/share/kbd/keymaps/**/*.map.gz
+#To change to another keymap append a corresponding file name to 'loadkeys', omitting path and file extension. For example, to set a German keyboard layout:
+loadkeys de-latin1
+
 DRIVE=/dev/nvme0n1
 
 #Wipe disk
@@ -58,7 +63,7 @@ mount LABEL=EFI /mnt/boot
 pacstrap /mnt base linux-zen linux-firmware linux-zen-headers btrfs-progs wpa_supplicant networkmanager mkinitcpio neovim sudo nano git base-devel
 
 #Generate fstab
-genfstab -L -p /mnt >> /mnt/etc/fstab
+genfstab -L /mnt >> /mnt/etc/fstab
 #Check fstab
 cat /mnt/etc/fstab
 NOTE:Keep the root partition's UUID mentioned in fstab handy to be able to plug them in when adding loaders for systemd-boot
@@ -78,9 +83,17 @@ hwclock --systohc
 locale-gen
 
 #Create the locale.conf (/etc/locale.conf) file, and set the LANG variable accordingly:
+******START OF locale.conf FILE******
 LANG=en_IN.UTF-8
 LANGUAGE=en_IN:en_GB:en
 LC_TIME=en_IN.UTF-8
+******END OF FILE******
+
+#If you set/changed the keyboard layout on the first step, make the changes persistent by editing /etc/vconsole.conf as such:
+nano /etc/vconsole.conf
+******PART OF FILE TO BE EDITED******
+KEYMAP=de-latin1
+******SAVE THE FILE******
 
 #Set hostname and setup /etc/hosts file
 echo MechyMamba > /etc/hostname
@@ -110,7 +123,7 @@ EDITOR=nano visudo
 
 ******PART OF FILE TO BE EDITED******
 %wheel ALL=(ALL) ALL
-******Save the file******
+******SAVE THE FILE******
 
 #Install other necessary packages
 pacman -S pipewire pipewire-alsa pipewire-pulse cups ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra bash-completion amd-ucode curl wget
@@ -118,8 +131,13 @@ pacman -S pipewire pipewire-alsa pipewire-pulse cups ttf-liberation noto-fonts n
 #Enable CUPS socket detection
 systemctl enable cups.socket
 
-#Install WM/DM of choice
+#Install WM/DM of choice. Example to install Gnome:
 pacman -S gnome
+#If you have installed gnome or any other desktop environment do (replace 'gdm' with your desktop specific login manager service):
+systemctl enable gdm
+#Gnome specific package:
+pacman -S power-profiles-daemon
+
 #Install graphics drivers
 pacman -S mesa vulkan-radeon xf86-video-amdgpu libva-mesa-driver mesa-vdpau
 
@@ -130,10 +148,10 @@ amdgpu
 #The edited line shound look somethng like this:
 MODULES=(amdgpu ...)
 
-#Edit the mkinitcpio.conf file like earlier and add btrfs to the HOOKS=(...)
+#Edit the mkinitcpio.conf file like earlier and add btrfs to the HOOKS=(...) (Doing this step is not required for using BTRFS of a single device)
 HOOKS=(... btrfs filesystems ...)
 #Generate
-mkinitcpio -p linux
+mkinitcpio -P
 
 #Installing systemd-boot bootloader
 bootctl --path=/boot install
@@ -141,7 +159,7 @@ bootctl --path=/boot install
 #Configuring loader
 nano /boot/loader/loader.conf
 **Add the following lines to the file(excluding asterisks. It defines the EOF)
-default archlinux.conf
+default archlinux-zen.conf
 editor no
 auto-entries 1
 auto-firmware 1
@@ -151,15 +169,15 @@ TIP:A basic loader configuration file is located at /usr/share/systemd/bootctl/l
 
 #Adding loaders
 cd /boot/loader/entries
-#This will create 2 files: archlinux.conf and archlinux-fallback.conf
-touch archlinux.conf archlinux-fallback.conf
-nano archlinux.conf
+#This will create 2 files: archlinux-zen.conf and archlinux-zen-fallback.conf
+touch archlinux-zen.conf archlinux-zen-fallback.conf
+nano archlinux-zen.conf
 **Add the following lines to the file(excluding asterisks. It defines the EOF)
 # Created by EncryptedCicada
-title Arch Linux
-linux /vmlinuz-linux
+title Arch Linux Zen
+linux /vmlinuz-linux-zen
 initrd /amd-ucode.img
-initrd /initramfs-linux.img
+initrd /initramfs-linux-zen.img
 options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3 vt.global_cursor_default=0
 **
 
@@ -167,17 +185,15 @@ nano archlinux-fallback.conf
 **Add the following lines to the file(excluding asterisks. It defines the EOF)
 # Created by EncryptedCicada
 title Arch Linux (fallback initramfs)
-linux /vmlinuz-linux
+linux /vmlinuz-linux-zen
 initrd /amd-ucode.img
-initrd /initramfs-linux-fallback.img
+initrd /initramfs-linux-zen-fallback.img
 options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3 vt.global_cursor_default=0
 **
 TIP:An example entry file is located at /usr/share/systemd/bootctl/arch.conf
 
 #For quiet boot add the following to the options line in the loader after 'rw'
-quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3
-#The line could also look something like this:
-options root="LABEL=system" rw quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3 vt.global_cursor_default=0
+quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_priority=3 vt.global_cursor_default=0
 
 #More on updating systemd-boot when systemd gets updated towards the EOF
 
