@@ -23,8 +23,7 @@ swapon -L swap
 #Format system partition as btrfs and create subvolumes
 mkfs.btrfs --force --label system /dev/disk/by-partlabel/system
 
-o=defaults
-o_btrfs=$o,compress=zstd,ssd,noatime,autodefrag
+o_btrfs=defaults,compress=zstd,ssd,noatime,autodefrag
 
 mount -t btrfs LABEL=system /mnt
 
@@ -42,20 +41,21 @@ umount -R /mnt
 mount -o subvol=@,$o_btrfs LABEL=system /mnt
 
 mkdir /mnt/{boot,home,var,root,srv,timeshift-btrfs}
+mkdir /mnt/var/{log,tmp,cache}
 
 mount -o subvol=@home,$o_btrfs LABEL=system /mnt/home
 mount -o subvol=@srv,$o_btrfs LABEL=system /mnt/srv
+mount -o subvol=@root,$o_btrfs LABEL=system /mnt/root
+mount -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/timeshift-btrfs
 mount -o subvol=@log,$o_btrfs LABEL=system /mnt/var/log
 mount -o subvol=@tmp,$o_btrfs LABEL=system /mnt/var/tmp
-mount -o subvol=@root,$o_btrfs LABEL=system /mnt/root
 mount -o subvol=@cache,$o_btrfs LABEL=system /mnt/var/cache
-mount -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/timeshift-btrfs
 
 #Mount boot partition
 mount LABEL=EFI /mnt/boot
 
 #Install base system
-pacstrap /mnt base linux linux-firmware linux-headers btrfs-progs wpa_supplicant networkmanager mkinitcpio neovim sudo nano git base-devel
+pacstrap /mnt base linux-zen linux-firmware linux-zen-headers btrfs-progs wpa_supplicant networkmanager mkinitcpio neovim sudo nano git base-devel
 
 #Generate fstab
 genfstab -L -p /mnt >> /mnt/etc/fstab
