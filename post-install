@@ -1,41 +1,74 @@
 #These are my steps to achieve my personal setup
 
 #Install an AUR helper like paru to help installing packages form AUR
-cd /home/mamba/Downloads
-git clone https://aur.archlinux.org/paru-bin.git
-cd paru-bin
-makepkg -si
+$ cd /home/mamba/Downloads
+$ git clone https://aur.archlinux.org/paru-bin.git
+$ cd paru-bin
+$ makepkg -si
 #Run the following command after the pervious process is completed
-paru -gendb
+$ paru -gendb
 
 #Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
 
 #Get necessary packages
-paru -S timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
-#Now open and run reflector-simple and refresh mirrors
+$ paru -S zsh zsh-syntax-highlighting zsh-autosuggestions neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
+
+#Open terminal and run
+$ sudo nano /etc/xdg/reflector/reflector.conf
+
+******APPEND THE FOLLOWING LINES (excluding EOF*******
+--save /etc/pacman.d/mirrorlist
+--country India,Pakistan
+--protocol https
+--latest 5
+******EOF******
+
+#Save and close the file and run:
+$ sudo systemctl enable reflector.timer
+
+#ZSH Shell setup:
+$ chsh -l
+$ chsh -s <full-path-to-shell>
+#<full-path-to-shell> to be taken from `chsh -l` command
+#Logout and login; open terminal;go through the setup for zsh; select defaults to start with and then run:
+nano ~/.zshrc
+******APPEND THE FOLLOWING LINES AT THE EOF******
+# Run neofetch at start
+if [ -f /usr/bin/neofetch ]
+then
+        neofetch
+fi
+
+# Activate starship prompt if present
+if [ -f /usr/bin/starship ]
+then
+        eval "$(starship init zsh)"
+fi
+******EOF******
 
 #Open timeshift and complete the initial setup
 
 #Theming specific steps ahead
+
 #To theme the gnome desktop install a gtk theme
-paru -S sweet-gtk-theme sweet-gtk-theme-dark
+$ paru -S sweet-gtk-theme sweet-gtk-theme-dark
 
 #To set the newly installed theme open 'Gnome Tweaks' and go to appearance tab and change the applications and shell themes to your liking.
 #There might be an exclamation mark in front of shell theme dropdown and that can be taken care of by enabling the User Themes extension within the Extensions app.
 
 #To setup plymouth:
-paru -S plymouth-git gdm-plymouth
+$ paru -S plymouth-git gdm-plymouth
 #Append plymouth to the HOOKS in /etc/mkinitcpio.conf after base and udev for it to function
-sudo nvim /etc/mkinitcpio.conf
+$ sudo nvim /etc/mkinitcpio.conf
 ******example
 HOOKS=(base udev plymouth ...)
 ******
 #Install extra plymouth themes from AUR, for example:
-paru -S plymouth-theme-sweet-arch-git
+$ paru -S plymouth-theme-sweet-arch-git
 #See all installed themes with:
-plymouth-set-default-theme -l
+$ plymouth-set-default-theme -l
 #Change the default theme(spinner) with something else by editing the plymouthd.conf located in /etc/plymouth/ to your theme listed by the previous command:
-sudo nvim /etc/plymouth/plymouthd.conf
+$ sudo nvim /etc/plymouth/plymouthd.conf
 ******example
 [Daemon]
 Theme=sweet-arch
@@ -43,12 +76,12 @@ ShowDelay=0
 DeviceTimeout=8
 ******
 #initrd must be regenerated after changing the theme for it to take affect with the following command (change apple-mac-plymouth to the theme you're setting):
-sudo plymouth-set-default-theme -R sweet-arch
+$ sudo plymouth-set-default-theme -R sweet-arch
 NOTE: On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set ShowDelay to an interval (in seconds) longer than your boot time to prevent this flicker and only show a blank screen.
 
 #To add and work with extensions on gnome
 #First install the native connector for extentions to work with:
-paru -S chrome-gnome-shell
+$ paru -S chrome-gnome-shell
 #Add extension to chrome/chromium based browsers like brave from https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep
 #Go to extentions.gnome.org to add extentions to gnome
 #My personally curated extensions (add one at a time and click install when prompted):
