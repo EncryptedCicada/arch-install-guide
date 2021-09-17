@@ -11,25 +11,19 @@ $ paru -gendb
 #Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
 
 #Get necessary packages
-$ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
+$ paru -S neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
 
-#Open terminal and run
-$ sudo nano /etc/xdg/reflector/reflector.conf
+#If installing zsh, do:
+$ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
 
-******APPEND THE FOLLOWING LINES (excluding EOF*******
---save /etc/pacman.d/mirrorlist
---country India,Pakistan
---protocol https
---latest 5
-******EOF******
-
-#Save and close the file and run:
-$ sudo systemctl enable reflector.timer
+#Start pkgfile autoupdate timer
+$ sudo systemctl enable pkgfile-update.timer
 
 #ZSH Shell setup:
 $ chsh -l
 $ chsh -s <full-path-to-shell>
 #<full-path-to-shell> to be taken from `chsh -l` command
+
 #Logout and login; open terminal;go through the setup for zsh; select defaults to start with and then run:
 nano ~/.zshrc
 ******APPEND THE FOLLOWING LINES AT THE EOF******
@@ -63,7 +57,20 @@ then
         eval "$(starship init zsh)"
 fi
 ******EOF******
-#To customize the ZSH root shell then repeat the above step but this time instead of doing `nano ~/.zshrc` do `sudo nano /etc/skel/.zshrc`
+#If you want garuda like zsh shell prompt, copy file starship.toml from config folder of this repository and paste it in ~/.config on your PC.
+
+#Open terminal and run
+$ sudo nano /etc/xdg/reflector/reflector.conf
+
+******APPEND THE FOLLOWING LINES (excluding EOF*******
+--save /etc/pacman.d/mirrorlist
+--country India,Pakistan
+--protocol https
+--latest 5
+******EOF******
+
+#Save and close the file and run:
+$ sudo systemctl enable reflector.timer
 
 #Open timeshift and complete the initial setup
 
