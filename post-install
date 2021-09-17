@@ -11,7 +11,7 @@ $ paru -gendb
 #Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
 
 #Get necessary packages
-$ paru -S zsh zsh-syntax-highlighting zsh-autosuggestions neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
+$ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
 
 #Open terminal and run
 $ sudo nano /etc/xdg/reflector/reflector.conf
@@ -33,6 +33,24 @@ $ chsh -s <full-path-to-shell>
 #Logout and login; open terminal;go through the setup for zsh; select defaults to start with and then run:
 nano ~/.zshrc
 ******APPEND THE FOLLOWING LINES AT THE EOF******
+## Plugins section: Enable fish style features
+# Use syntax highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Use autosuggestion
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Use history substring search
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# Use fzf
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+# Arch Linux command-not-found support, you must have package pkgfile installed
+# https://wiki.archlinux.org/index.php/Pkgfile#.22Command_not_found.22_hook
+[[ -e /usr/share/doc/pkgfile/command-not-found.zsh ]] && source /usr/share/doc/pkgfile/command-not-found.zsh
+
 # Run neofetch at start
 if [ -f /usr/bin/neofetch ]
 then
@@ -45,6 +63,7 @@ then
         eval "$(starship init zsh)"
 fi
 ******EOF******
+#To customize the ZSH root shell then repeat the above step but this time instead of doing `nano ~/.zshrc` do `sudo nano /etc/skel/.zshrc`
 
 #Open timeshift and complete the initial setup
 
