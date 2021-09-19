@@ -10,8 +10,11 @@ $ paru -gendb
 
 #Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
 
+#Get Dell G5 SE specific packages
+paru -S dell-g5se-fanctl
+
 #Get necessary packages
-$ paru -S fish starship pkgfile neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
+$ paru -S fish starship pkgfile neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin android-tools
 
 #To set fish as default shell, do:
 chsh -s /usr/bin/fish
