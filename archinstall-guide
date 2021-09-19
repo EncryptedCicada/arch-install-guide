@@ -63,7 +63,7 @@ mount LABEL=EFI /mnt/boot
 pacstrap /mnt base linux-zen linux-firmware linux-zen-headers btrfs-progs wpa_supplicant networkmanager mkinitcpio neovim sudo nano git base-devel
 
 #Generate fstab
-genfstab -L /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 #Check fstab
 cat /mnt/etc/fstab
 NOTE:Keep the root partition's UUID mentioned in fstab handy to be able to plug them in when adding loaders for systemd-boot
