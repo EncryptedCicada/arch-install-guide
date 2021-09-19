@@ -11,8 +11,15 @@ $ paru -gendb
 #Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
 
 #Get necessary packages
-$ paru -S neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
+$ paru -S fish starship pkgfile neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
 
+#To install fish shell, do:
+chsh -s /usr/bin/fish
+#Add the following to the end of ~/.config/fish/config.fish:
+******
+# Start starship prompt if installed
+starship init fish | source
+******
 #If installing zsh, do:
 $ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
 
