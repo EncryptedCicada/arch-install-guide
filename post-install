@@ -13,18 +13,29 @@ $ paru -gendb
 #Get necessary packages
 $ paru -S fish starship pkgfile neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin power-profiles-daemon android-tools
 
-#To install fish shell, do:
+#To set fish as default shell, do:
 chsh -s /usr/bin/fish
 #Add the following to the end of ~/.config/fish/config.fish:
 ******
-# Start starship prompt if installed
-starship init fish | source
+#Hide welcome message
+set -g fish_greeting
+
+# Starship prompt
+if status --is-interactive
+   source ("/usr/bin/starship" init fish --print-full-init | psub)
+end
+
+# Run neofetch if session is interactive
+if status --is-interactive
+   neofetch
+end
 ******
-#If installing zsh, do:
-$ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
 
 #Start pkgfile autoupdate timer
 $ sudo systemctl enable pkgfile-update.timer
+
+#If installing zsh, do:
+$ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
 
 #ZSH Shell setup:
 $ chsh -l
@@ -64,7 +75,8 @@ then
         eval "$(starship init zsh)"
 fi
 ******EOF******
-#If you want garuda like zsh shell prompt, copy file starship.toml from config folder of this repository and paste it in ~/.config on your PC.
+
+#If you want garuda like zsh or fish shell prompt, copy file starship.toml from config folder of this repository and paste it in ~/.config on your PC.
 
 #Open terminal and run
 $ sudo nano /etc/xdg/reflector/reflector.conf
