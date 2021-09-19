@@ -15,21 +15,7 @@ $ paru -S fish starship pkgfile neofetch timeshift-autosnap brave-bin gnome-twea
 
 #To set fish as default shell, do:
 chsh -s /usr/bin/fish
-#Add the following to the end of ~/.config/fish/config.fish:
-******
-#Hide welcome message
-set -g fish_greeting
-
-# Starship prompt
-if status --is-interactive
-   source ("/usr/bin/starship" init fish --print-full-init | psub)
-end
-
-# Run neofetch if session is interactive
-if status --is-interactive
-   neofetch
-end
-******
+#For a little modified fish shell copy needed contents from config.fish file in this repository and add them to the end of ~/.config/fish/config.fish
 
 #Start pkgfile autoupdate timer
 $ sudo systemctl enable pkgfile-update.timer
