@@ -126,7 +126,7 @@ EDITOR=nano visudo
 ******SAVE THE FILE******
 
 #Install other necessary packages
-pacman -S pipewire pipewire-alsa pipewire-pulse cups ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji bash-completion amd-ucode curl wget
+pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack cups ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji bash-completion amd-ucode curl wget
 
 #Enable CUPS socket detection
 systemctl enable cups.socket
