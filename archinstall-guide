@@ -39,7 +39,7 @@ btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@root
 btrfs subvolume create /mnt/@cache
-btrfs subvolume create /mnt/@snapshots
+# btrfs subvolume create /mnt/@snapshots
 
 umount -R /mnt
 
@@ -51,7 +51,7 @@ mkdir /mnt/var/{log,tmp,cache}
 mount -o subvol=@home,$o_btrfs LABEL=system /mnt/home
 mount -o subvol=@srv,$o_btrfs LABEL=system /mnt/srv
 mount -o subvol=@root,$o_btrfs LABEL=system /mnt/root
-mount -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/timeshift-btrfs
+# mount -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/timeshift-btrfs
 mount -o subvol=@log,$o_btrfs LABEL=system /mnt/var/log
 mount -o subvol=@tmp,$o_btrfs LABEL=system /mnt/var/tmp
 mount -o subvol=@cache,$o_btrfs LABEL=system /mnt/var/cache
@@ -126,7 +126,7 @@ EDITOR=nano visudo
 ******SAVE THE FILE******
 
 #Install other necessary packages
-pacman -S pipewire pipewire-alsa pipewire-pulse cups ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra bash-completion amd-ucode curl wget
+pacman -S pipewire pipewire-alsa pipewire-pulse cups ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji bash-completion amd-ucode curl wget
 
 #Enable CUPS socket detection
 systemctl enable cups.socket
