@@ -45,7 +45,7 @@ umount -R /mnt
 
 mount -o subvol=@,$o_btrfs LABEL=system /mnt
 
-mkdir /mnt/{boot,home,var,root,srv,timeshift-btrfs}
+mkdir /mnt/{boot,home,var,root,srv}
 mkdir /mnt/var/{log,tmp,cache}
 
 mount -o subvol=@home,$o_btrfs LABEL=system /mnt/home
