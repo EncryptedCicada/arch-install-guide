@@ -1,7 +1,5 @@
 # Arch Linux install guide
 
-<B> This branch is experimental with untested features. Do not use this. </B>
-
 This guide aims to be the all-in-one beginner's setup guide for a non nerd who just wants an arch system setup and running with a little bit of eye candy too. It comes with all the info and commands with examples and notes to educate the user about the consecuences and affects of their commands. This is a personalized guide which can easily be modified where it needs to be and the steps for the same are mentioned within the guide. If in any way the end user gets hung up, he/she may visit [wiki.archlinux.org](https://wiki.archlinux.org)!
 
 ## Table of contents
@@ -48,7 +46,7 @@ If you're not interested in adding the boot parameter you may want to enable Sys
 - [ ] Add screenshots
 - [ ] Expand the guide to cover more tweaks and improvements.
   - [ ] Add instructions to enable native wayland support in browsers
-  - [ ] Include bash prompt customisation instructions (using oh-my-bash)
+  - [ ] Include bash prompt customisation instructions (using starship)
 
 ## Disclaimer:warning:
 This guide presumes that the user will be thorough with the text before beginning to execute the guide. If you think it's gonna mess up if u execute a random command, chances are it will actually mess everything up. Be careful with your keystrokes! I am, in no way responsible for the harm done to your PC due to not following the guide correctly and/or modifying the contents of the guide for personal use without prior knowledge of the consequences. That being said, this guide has been personally tested to account for any errors and I've successfully built my system using this guide. If there are any mistakes or errors in the guide, please open an issue for the same.
