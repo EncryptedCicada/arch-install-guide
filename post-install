@@ -1,39 +1,30 @@
 #These are my steps to achieve my personal setup
 
-#Install an AUR helper like paru to help installing packages form AUR
-$ cd /home/mamba/Downloads
-$ git clone https://aur.archlinux.org/paru-bin.git
-$ cd paru-bin
-$ makepkg -si
-#Run the following command after the pervious process is completed
-$ paru -gendb
+#Edit /etc/pacman.conf and append the following lines under '#Misc options'
+...
+ILoveCandy
+Color
+CheckSpace
+ParallelDownloads = 5
+...
 
-#Edit /etc/pacman.conf and uncomment Color and append ILoveCandy
+#Get necessary packages for customizing terminal
+$ paru -S starship nerd-fonts-complete
 
-#Get Dell G5 SE specific packages
-paru -S dell-g5se-fanctl
+#To set Xsh as default shell where x can be fi/z/da etc shell prefixes, do:
+#chsh -s /usr/bin/Xsh
 
-#Get necessary packages
-$ paru -S fish starship pkgfile neofetch timeshift-autosnap brave-bin gnome-tweaks chrome-gnome-shell nerd-fonts-complete ttf-jetbrains-mono bitwarden-bin gnome-software-packagekit-plugin android-tools
-
-#To set fish as default shell, do:
-chsh -s /usr/bin/fish
-#For a little modified fish shell copy needed contents from config.fish file in this repository and add them to the end of ~/.config/fish/config.fish
-
-#Start pkgfile autoupdate timer
-$ sudo systemctl enable pkgfile-update.timer
-
+#For a barely modified fish shell copy needed contents from config.fish file in this repository and add them to the end of ~/.config/fish/config.fish	
+#For fish or zsh shell also install 'pkgfile'
+#sudo pacman -S pkgfile
+#Start pkgfile autoupdate timer	
+#sudo systemctl enable pkgfile-update.timer
 #If installing zsh, do:
-$ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
-
-#ZSH Shell setup:
-$ chsh -l
-$ chsh -s <full-path-to-shell>
-#<full-path-to-shell> to be taken from `chsh -l` command
-
-#Logout and login; open terminal;go through the setup for zsh; select defaults to start with and then run:
+#paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
+#For the changes to take effect, Logout and login once, open terminal,
+#go through the setup for zsh, select defaults to start with and then run and append the code block that follows:
 nano ~/.zshrc
-******APPEND THE FOLLOWING LINES AT THE EOF******
+...
 ## Plugins section: Enable fish style features
 # Use syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -41,7 +32,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # Use autosuggestion
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# Use history substring search
+#Use history substring search
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # Use fzf
@@ -63,63 +54,64 @@ if [ -f /usr/bin/starship ]
 then
         eval "$(starship init zsh)"
 fi
-******EOF******
+...
 
 #If you want garuda like zsh or fish shell prompt, copy file starship.toml from config folder of this repository and paste it in ~/.config on your PC.
 
 #Open terminal and run
-$ sudo nano /etc/xdg/reflector/reflector.conf
-
-******APPEND THE FOLLOWING LINES (excluding EOF*******
+sudo nano /etc/xdg/reflector/reflector.conf
+#Append the following lines to the file
+...
 --save /etc/pacman.d/mirrorlist
 --country India,Pakistan
 --protocol https
 --latest 5
-******EOF******
-
+...
 #Save and close the file and run:
-$ sudo systemctl enable reflector.timer
+sudo systemctl enable reflector.timer
 
 #Open timeshift and complete the initial setup
 
-#Theming specific steps ahead
-
-#To theme the gnome desktop install a gtk theme
-$ paru -S sweet-gtk-theme sweet-gtk-theme-dark
-
-#To set the newly installed theme open 'Gnome Tweaks' and go to appearance tab and change the applications and shell themes to your liking.
-#There might be an exclamation mark in front of shell theme dropdown and that can be taken care of by enabling the User Themes extension within the Extensions app.
-
 #To setup plymouth:
-$ paru -S plymouth-git gdm-plymouth
-#Append plymouth to the HOOKS in /etc/mkinitcpio.conf after base and udev for it to function
-$ sudo nvim /etc/mkinitcpio.conf
-******example
-HOOKS=(base udev plymouth ...)
-******
+paru -S plymouth-git gdm-plymouth
+#Append plymouth to the HOOKS in /etc/mkinitcpio.conf after base and systemd for it to function
+sudo nvim /etc/mkinitcpio.conf
+#The resulting line should look like:
+...
+HOOKS=(base systemd plymouth ...)
+...
+
 #Install extra plymouth themes from AUR, for example:
-$ paru -S plymouth-theme-sweet-arch-git
+paru -S plymouth-theme-sweet-arch-git
 #See all installed themes with:
-$ plymouth-set-default-theme -l
+plymouth-set-default-theme -l
 #Change the default theme(spinner) with something else by editing the plymouthd.conf located in /etc/plymouth/ to your theme listed by the previous command:
-$ sudo nvim /etc/plymouth/plymouthd.conf
-******example
+sudo nvim /etc/plymouth/plymouthd.conf
+#Example setup can be like:
+...
 [Daemon]
 Theme=sweet-arch
 ShowDelay=0
 DeviceTimeout=8
-******
-#initrd must be regenerated after changing the theme for it to take affect with the following command (change apple-mac-plymouth to the theme you're setting):
-$ sudo plymouth-set-default-theme -R sweet-arch
-NOTE: On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set ShowDelay to an interval (in seconds) longer than your boot time to prevent this flicker and only show a blank screen.
+...
+#initrd must be regenerated after changing the theme for it to take affect with the following command
+#change 'sweet-arch' to the theme you're setting:
+sudo plymouth-set-default-theme -R sweet-arch
+NOTE: On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready.
+#You can set ShowDelay to an interval (in seconds) longer than your boot time to prevent this flicker and only show a blank screen.
 
 #To add and work with extensions on gnome
 #First install the native connector for extentions to work with:
-$ paru -S chrome-gnome-shell
+paru -S chrome-gnome-shell
+#Install the extension-manager app (recommended):
+paru -S extension-manager
+
+#Alternatively you can do the following:
 #Add extension to chrome/chromium based browsers like brave from https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep
 #Go to extentions.gnome.org to add extentions to gnome
 #My personally curated extensions (add one at a time and click install when prompted):
 1. blur-my-shell
 2. just-perfection
 3. espresso
+4. Vitals
 #Visit github pages of respective extensions to know more
