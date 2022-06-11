@@ -58,6 +58,16 @@ fi
 
 #If you want garuda like zsh or fish shell prompt, copy file starship.toml from config folder of this repository and paste it in ~/.config on your PC.
 
+#To setup starship (installed earlier) prompt on bash do:
+cd ~/
+nano .bashrc
+#Append the following lines at the end of the file
+...
+eval "$(starship init bash)"
+...
+#Save and exit. Takes effect on subsequent terminal launches (Reboot preferred)
+#To see more presets go to https://starship.rs/presets/
+
 #Open terminal and run
 sudo nano /etc/xdg/reflector/reflector.conf
 #Append the following lines to the file
@@ -71,6 +81,55 @@ sudo nano /etc/xdg/reflector/reflector.conf
 sudo systemctl enable reflector.timer
 
 #Open timeshift and complete the initial setup
+
+#Temperature monitoring and fan control for Dell G5 SE 5505
+sudo nano /etc/modules-load.d/dell-smm-hwmon.conf
+#Append the following lines
+...
+dell-smm-hwmon
+...
+#Save and exit the file. Create another file and append the proceeding lines:
+sudo nano /etc/modprobe.d/dell-smm-hwmon.conf
+...
+# This file must be at /etc/modprobe.d/
+options dell-smm-hwmon restricted=0 ignore_dmi=1
+...
+#To install nbfc-linux
+paru -S dmidecode nbfc-linux
+#Enter configs directory for nbfc-linux:
+cd /usr/share/nbfc/configs/
+#Find the config file
+ls | grep "Dell\ G5\ SE\ 5505.json"
+#If the comand returns the file then skip the next step otherwise do:
+sudo wget https://raw.githubusercontent.com/EncryptedCicada/arch-install-guide-Dell-G5-SE/main/config/nbfc-linux/Dell%20G5%20SE%205505.json
+cd ~/
+#Set the config and start nbfc
+sudo nbfc config --set "Dell G5 SE 5505"
+sudo nbfc start
+#Enable nbfc startup at boot
+sudo systemctl enable nbfc_service
+
+#S3 sleep (Suspend-to-RAM) can be enabled via bios injection, read readme for more information
+
+#To enable wayland on browsers:
+#For chromium based browsers
+#Open browser and go to chrome://flags
+#Change flag 'Preferred Ozone platform' to 'Auto'
+#If using pipewire (we are, in this guide) also change 'WebRTC PipeWire support' to 'Enabled'
+#For Firefox do
+cd ~/.config
+#If the folder doesn't exist make it with
+#cd ~/ && mkdir .config && cd .config
+mkdir environment.d
+touch envvars.conf
+nano envvars.conf
+#Add the following lines
+...
+MOZ_ENABLE_WAYLAND=1
+...
+NOTE: No other display managers except GDM (for Gnome) and SDDM (for KDE Plasma) supporting Wayland sessions
+        provide support for sourcing systemd user environment variables yet (as of the latest commit).
+
 
 #To setup plymouth:
 paru -S plymouth-git gdm-plymouth
