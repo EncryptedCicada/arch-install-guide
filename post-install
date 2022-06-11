@@ -120,8 +120,15 @@ sudo systemctl enable nbfc_service
 cd ~/.config
 #If the folder doesn't exist make it with
 #cd ~/ && mkdir .config && cd .config
-mkdir environment.d
-touch envvars.conf
+#Check if environment.d folder exists
+ls | grep "environment.d"
+#If it doesn't exists then do
+#mkdir environment.d
+cd environment.d
+#Check if envvars.conf exists
+ls | grep "envvars.conf"
+#If it doesn't exist then do
+#touch envvars.conf
 nano envvars.conf
 #Add the following lines
 ...
@@ -129,7 +136,24 @@ MOZ_ENABLE_WAYLAND=1
 ...
 NOTE: No other display managers except GDM (for Gnome) and SDDM (for KDE Plasma) supporting Wayland sessions
         provide support for sourcing systemd user environment variables yet (as of the latest commit).
+        
+#Install ccache
+sudo pacman -S ccache
+#For extra setup read (https://wiki.archlinux.org/title/ccache)
 
+#Install adwaita style theme for qt applications
+sudo pacman -S adwaita-qt5 adwaita-qt6
+#Edit systemd user environment variables config
+nano ~/.config/environment.d/envvars.conf
+#Append the following lines to the file:
+...
+QT_SELECT=6
+QT_QPA_PLATFORM=wayland
+QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt/plugins
+QT_QPA_PLATFORMTHEME=qt5ct
+...
+
+#Pre-setup envvars.conf file is located at https://github.com/EncryptedCicada/arch-install-guide-Dell-G5-SE/raw/main/config/environment.d/envvars.conf
 
 #To setup plymouth:
 paru -S plymouth-git gdm-plymouth
