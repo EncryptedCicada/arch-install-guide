@@ -175,12 +175,12 @@ paru --gendb
 cd ~/Downloads
 rm -rf paru-bin
 #Use paru to install essential packages from AUR
-paru -S android-tools asp bluez-utils bluez brave-bin ccache edk2-omvf discord_arch_electron dnsmasq gamemode \
+paru -S android-tools asp bluez-utils bluez brave-bin ccache libvirt edk2-omvf dnsmasq iptables-nft virt-manager \
         flatpak flatseal gdb glib goverlay-bin heroic-games-launcher-bin hunspell-en_gb libreoffice-fresh hyphen-en \
-        wireless-regdb iptables-nft jdk-openjdk man-db mangohud-git meld micro mpd neofetch pfetch nerd-fonts-cascadia-code \
+        wireless-regdb jdk-openjdk man-db mangohud-git meld micro mpd neofetch pfetch nerd-fonts-cascadia-code \
         nerd-fonts-fira-code nerd-fonts-jetbrains-mono nerd-fonts-sf-mono obs-studio papirus-icon-theme pdfarranger \
         proton-ge-custom-bin protontricks qt5ct reflector switcheroo-control teams-insiders tangram timeshift-autosnap \
-        uget virt-manager visual-studio-code-bin wine-stable wine-gecko wine-mono bottles
+        uget visual-studio-code-bin wine-stable wine-gecko wine-mono bottles gamemode
 #If Gnome is to be installed
 paru -S clapper chrome-gnome-shell extension-manager fractal fragments gdm-settings-git dynamic-wallpaper \
         gnome-software-packagekit-plugin gnome-text-editor networkmanager-openvpn
