@@ -153,7 +153,8 @@ EDITOR=nano visudo
 
 #Install other necessary packages
 pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber gnome-firmware bpytop cups \
-          ttf-liberation noto-fonts noto-fonts-emoji bash-completion amd-ucode curl wget qt5-wayland qt6-wayland glfw-wayland
+          ttf-liberation noto-fonts noto-fonts-emoji bash-completion amd-ucode curl wget qt5-wayland \
+          qt6-wayland glfw-wayland
 
 #Enable CUPS socket detection
 systemctl enable cups.socket
