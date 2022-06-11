@@ -180,7 +180,7 @@ paru -S android-tools asp bluez-utils bluez brave-bin ccache edk2-omvf discord_a
         wireless-regdb iptables-nft jdk-openjdk man-db mangohud-git meld micro mpd neofetch pfetch nerd-fonts-cascadia-code \
         nerd-fonts-fira-code nerd-fonts-jetbrains-mono nerd-fonts-sf-mono obs-studio papirus-icon-theme pdfarranger \
         proton-ge-custom-bin protontricks qt5ct reflector switcheroo-control teams-insiders tangram timeshift-autosnap \
-        uget virt-manager visual-studio-code-bin wine-mono
+        uget virt-manager visual-studio-code-bin wine-stable wine-gecko wine-mono bottles
 #If Gnome is to be installed
 paru -S clapper chrome-gnome-shell extension-manager fractal fragments gdm-settings-git dynamic-wallpaper \
         gnome-software-packagekit-plugin gnome-text-editor networkmanager-openvpn
