@@ -193,8 +193,10 @@ paru -S extension-manager
 #Add extension to chrome/chromium based browsers like brave from https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep
 #Go to extentions.gnome.org to add extentions to gnome
 #My personally curated extensions (add one at a time and click install when prompted):
-1. blur-my-shell
-2. just-perfection
-3. espresso
+1. Blur My Shell
+2. Just Perfection
+3. Espresso
 4. Vitals
+5. GSConnect
+6. Gamemode
 #Visit github pages of respective extensions to know more
