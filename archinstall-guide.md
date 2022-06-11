@@ -143,6 +143,7 @@ NOTE: Some people including me can skip this step if they don't want to setup a 
 #Add user (replace username with your username)
 USER=username
 useradd -m -G wheel $USER
+usermod -aG libvirt $USER
 passwd $USER
 
 #Edit the sudoers file to give access to added user for elevated previlidges (after uncommenting the following line should look like below)
@@ -179,8 +180,8 @@ paru -S android-tools asp bluez-utils bluez brave-bin ccache libvirt edk2-omvf d
         flatpak flatseal gdb glib goverlay-bin heroic-games-launcher-bin hunspell-en_gb libreoffice-fresh hyphen-en \
         wireless-regdb jdk-openjdk man-db mangohud-git meld micro mpd neofetch pfetch nerd-fonts-cascadia-code \
         nerd-fonts-fira-code nerd-fonts-jetbrains-mono nerd-fonts-sf-mono obs-studio papirus-icon-theme pdfarranger \
-        proton-ge-custom-bin protontricks qt5ct reflector switcheroo-control teams-insiders tangram timeshift-autosnap \
-        uget visual-studio-code-bin wine-stable wine-gecko wine-mono bottles gamemode
+        proton-ge-custom-bin protontricks qt5ct reflector switcheroo-control teams-insiders tangram timeshift timeshift-autosnap \
+        uget visual-studio-code-bin wine-stable wine-gecko wine-mono bottles gamemode firewalld
 #If Gnome is to be installed
 paru -S clapper chrome-gnome-shell extension-manager fractal fragments gdm-settings-git dynamic-wallpaper \
         gnome-software-packagekit-plugin gnome-text-editor networkmanager-openvpn
@@ -253,6 +254,28 @@ options root="LABEL=system" rw rootflags=subvol=/@ quiet splash loglevel=3 rd.sy
 
 #To enable automatic updates of systemd-boot bootloader
 systemctl enable systemd-boot-update.service
+
+#Enable multilib repo
+nano /etc/pacman.conf
+#Look for file that says '#[multilib]'
+#Uncomment the line and the Server address that follows. It should look like:
+...
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+...
+
+Warning: Users need to be certain that their SSD supports TRIM before attempting to use it. Data loss can occur otherwise!
+#To verify TRIM support, run:
+lsblk --discard
+#Check the values of DISC-GRAN (discard granularity) and DISC-MAX (discard max bytes) columns. Non-zero values indicate TRIM support.
+#If your disk has trim support then enable fstrim timer
+systemctl enable fstrim.timer
+
+#Enable bluetooth, ssh, firewall and libvirt services
+systemctl enable bluetooth
+systemctl enable sshd
+systemctl enable firewalld
+systemctl enable libvirtd
 
 #Install WM/DM of choice. Example to install Gnome:
 pacman -S gnome
