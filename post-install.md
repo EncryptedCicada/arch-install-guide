@@ -159,11 +159,15 @@ QT_QPA_PLATFORMTHEME=qt5ct
 
 #To setup plymouth:
 paru -S plymouth-git gdm-plymouth
-#Append plymouth to the HOOKS in /etc/mkinitcpio.conf after base and systemd for it to function
+#Append sd-plymouth to the HOOKS in /etc/mkinitcpio.conf after base and systemd for it to function
 sudo nvim /etc/mkinitcpio.conf
 #The resulting line should look like:
 ...
-HOOKS=(base systemd plymouth ...)
+HOOKS=(base systemd sd-plymouth ...)
+...
+#The Kernel Command line must have the following parameters:
+...
+... quiet splash vt.global_cursor_default=0 ...
 ...
 
 #Install extra plymouth themes from AUR, for example:
