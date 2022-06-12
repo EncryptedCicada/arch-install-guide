@@ -81,6 +81,8 @@ sudo nano /etc/xdg/reflector/reflector.conf
 sudo systemctl enable reflector.timer
 
 #Open timeshift and complete the initial setup
+#For timeshift-autosnap backups appearing in grub automatically install grub-btrfs
+sudo pacman -S grub-btrfs
 
 #Temperature monitoring and fan control for Dell G5 SE 5505
 sudo nano /etc/modules-load.d/dell-smm-hwmon.conf
