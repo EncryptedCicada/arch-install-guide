@@ -3,7 +3,7 @@
 - ArchLinux bootable USB
 - Working internet connection
 
-### **Author's note: The information in this document is adapted from Arch Wiki and various other sources and is tested as working as of writing this. If necessary, please raise an issue from the issues tab.**
+### **Author's note: The information in this document is adapted from Arch Wiki and various other sources and is tested working as of writing this. If necessary, please raise an issue from the issues tab.**
 
 *Please boot into the ISO to proceed*
 
