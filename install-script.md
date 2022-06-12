@@ -1,4 +1,4 @@
-# **Install Script**
+# Install Script
 ### Prerequisites:
 - ArchLinux bootable USB
 - Working internet connection
