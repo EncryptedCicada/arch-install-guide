@@ -201,11 +201,17 @@ Generate the locales by running:
 
 	$ locale-gen
 
-Create the ``/etc/locale.conf`` file, and set the ``LANG`` variable accordingly (Paste the following lines making your own edits):
+Create the ``/etc/locale.conf`` file
+
+	$ nano /etc/locale.conf
+
+Set the ``LANG`` variable accordingly (Paste the following lines making your own edits):
 	
 	LANG=en_IN.UTF-8
 	LANGUAGE=en_IN:en_GB:en
 	LC_TIME=en_IN.UTF-8
+
+Save and exit.
 
 Set the keyboard layout for console by editing ``/etc/vconsole.conf``:
 
