@@ -129,6 +129,8 @@ Re-mount system partition with correct parameters and mount points for subvolume
 	$ mount -o subvol=@,$o_btrfs LABEL=system /mnt
 	$ mkdir /mnt/{boot,home,var,root,srv}
 	$ mkdir /mnt/var/{log,tmp,cache,cache/pacman,cache/pacman/pkg}
+	$ mkdir /mnt/var/cache/pacman
+	$ mkdir /mnt/var/cache/pacman/pkg
 	$ mount -o subvol=@home,$o_btrfs LABEL=system /mnt/home
 	$ mount -o subvol=@srv,$o_btrfs LABEL=system /mnt/srv
 	$ mount -o subvol=@root,$o_btrfs LABEL=system /mnt/root
