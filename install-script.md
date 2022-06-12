@@ -18,7 +18,7 @@ To change to another keymap append a corresponding file name (*from the command 
 
 	$ loadkeys de-latin1
 
-## Connecting to the internet
+## Check network connectivity
 
 Ensure your network interface is listed and enabled:
 
@@ -158,6 +158,8 @@ Check fstab
 
 	$ arch-chroot /mnt
 
+### Date and time setup
+
 Turn on NTP synchronization
 
 	$ timedatectl set-ntp true
@@ -175,6 +177,8 @@ Finally set your timezone replacing ``Asia/Kolkata`` with what you picked
 Set hardware clock from system clock
 
 	$ hwclock --systohc
+
+### Setup locales
 
 Edit /etc/locale.gen and uncomment ``en_IN``, ``en_GB.UTF8`` and other needed locales (my locales are India specific and fallback locale is UK Eng, please google your own locales)
 
@@ -208,6 +212,8 @@ Example:
 
 	KEYMAP=us
 
+### Setup hostname
+
 Hostname is the name of your PC on the network. Set hostname replacing ``myhostname`` for your desired hostname:
 
 	$ hostnamectl set-hostname myhostname
@@ -226,13 +232,7 @@ Append the following lines
 	::1             localhost
 	127.0.1.1       myhostname.localhost  myhostname
 
-Enable network manager
-
-	$ systemctl enable NetworkManager
-
-Enable ntp client
-
-	$ systemctl enable systemd-timesyncd
+### Accounts setup
 
 *NOTE*: Some people including me can skip the next step if they don't want to setup a password for root account. Some distros like Ubuntu do this by default to prevent newbies from breaking the system and to prevent root exploits. This guide still covers steps to provide elevated privilege to the standard user using sudo.
 
@@ -256,21 +256,19 @@ The edited line should look like:
 
 	%wheel ALL=(ALL) ALL
 
-Install necessary packages
+### Install necessary packages
 
 	$ pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber gnome-firmware bpytop cups \
           ttf-liberation noto-fonts noto-fonts-emoji bash-completion amd-ucode curl wget qt5-wayland \
           qt6-wayland glfw-wayland
 
-Enable CUPS socket detection
-
-	$ systemctl enable cups.socket
-
 Install graphics drivers (some drivers are specific to AMD Cards)
 
 	$ pacman -S mesa vulkan-radeon vulkan-mesa-layers xf86-video-amdgpu libva-mesa-driver mesa-vdpau
 
-Login as ``$USER`` and install ``paru`` (Or any other AUR helper):
+### Install an AUR Helper
+
+Login as ``$USER`` and install the ``paru`` AUR helper
 
 	$ su $USER
 	$ cd ~/
@@ -280,7 +278,7 @@ Login as ``$USER`` and install ``paru`` (Or any other AUR helper):
 	$ cd paru-bin
 	$ makepkg -si
 
-After installation is successful, do:
+After installation is successful, run:
 
 	$ paru --gendb
 	$ cd ~/Downloads
@@ -303,6 +301,8 @@ Exit user account
 
 	$ exit
 
+### ``Initramfs`` changes
+
 Enable KMS for your GPU
 
 	$ nano /etc/mkinitcpio.conf
@@ -320,8 +320,10 @@ Replace busybox init with systemd while in the ``mkinitcpio.conf`` file. The lin
 Generate initramfs
 
 	$ mkinitcpio -P
+	
+### Installing bootloader
 
-### This guide includes 2 options for bootloaders, ``GRUB`` and ``systemd-boot``
+**NOTE:** This guide includes 2 options for bootloaders, ``GRUB`` and ``systemd-boot``. Follow the respective section to install either of them.
 
 - Installing ``systemd-boot`` bootloader
 
@@ -424,6 +426,8 @@ To find the UUID of the swap partition run
 
 	$ blkid
 
+### Enable extra repos
+
 Enable ``multilib`` repo
 
 	$ nano /etc/pacman.conf
@@ -438,6 +442,8 @@ Uncomment the line and the ``Include`` statement that follows. It should look li
 
 **Warning:** Users need to be certain that their SSD supports TRIM before attempting to use it. Data loss can occur otherwise!
 
+### Disk Improvements
+
 To verify TRIM support, run:
 
 	$ lsblk --discard
@@ -448,12 +454,19 @@ If your disk has trim support then enable fstrim timer
 
 	$ systemctl enable fstrim.timer
 
-Enable bluetooth, ssh, firewall and libvirt services
+### Enable essential services
+
+Enable bluetooth, ssh, firewall, libvirt, NTP, Network Manager, and CUPS Socket Detection services
 
 	$ systemctl enable bluetooth
 	$ systemctl enable sshd
 	$ systemctl enable firewalld
 	$ systemctl enable libvirtd
+	$ systemctl enable systemd-timesyncd
+	$ systemctl enable NetworkManager
+	$ systemctl enable cups.socket
+
+### Install Desktop
 
 Install WM/DM of choice. *Example to install Gnome:*
 
@@ -471,15 +484,20 @@ Install Gnome specific packages:
         gnome-software-packagekit-plugin gnome-text-editor networkmanager-openvpn
 	$ exit
 
+### Disable root password
+
+**NOTE:** Do not do this if you have not created any user yet.
+
 For people who wish to disable password for root account do
 
 	$ sudo usermod -p '!' root
 
 This sets root to have a disabled password.
 
-Exit chroot, type: (optionally do ctrl+d)
+### Exit chroot
 
 	$ exit
+Or do ``Ctrl+D``
 
 ## Unmount all partitions
 
@@ -491,8 +509,8 @@ Exit chroot, type: (optionally do ctrl+d)
 
 Alternatively, to shutdown
 	
-		$ shutdown now
+	$ shutdown now
 
 Remember to remove the installation medium and then login into the new system with the user/root account.
 
-Proceed to the post-install document to continue.
+Proceed to the [post-install](https://github.com/EncryptedCicada/arch-install-guide/blob/main/post-install.md) script to continue.
