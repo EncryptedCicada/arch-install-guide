@@ -253,7 +253,6 @@ Add a user account (replace ``username`` with your username)
 
 	$ USER=username
 	$ useradd -m -G wheel $USER
-	$ usermod -aG libvirt $USER
 	$ passwd $USER
 
 Edit the sudoers file to give access to added user for elevated previlidges:
@@ -268,8 +267,11 @@ The edited line should look like:
 ### Install necessary packages
 
 	$ pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber gnome-firmware bpytop cups \
-          ttf-liberation noto-fonts noto-fonts-emoji bash-completion amd-ucode curl wget qt5-wayland \
-          qt6-wayland glfw-wayland
+          ttf-liberation noto-fonts noto-fonts-emoji bash-completion curl wget qt5-wayland \
+          qt6-wayland glfw-wayland android-tools asp bat bluez-utils bluez qemu-desktop libvirt edk2-ovmf \
+	  dnsmasq iptables-nft virt-manager hunspell-en_gb libreoffice-fresh hyphen-en flatpak ccache \
+	  gdb glibc wireless-regdb jdk-openjdk man-db meld micro mpd neofetch obs-studio papirus-icon-theme \
+	  pdfarranger qt5ct reflector uget img2pdf libva-vdpau-driver dmidecode swtpm firewalld gamemode
 
 Install graphics drivers (some drivers are specific to AMD Cards)
 
@@ -295,20 +297,21 @@ After installation is successful, run:
 
 Use ``paru`` to install essential packages from AUR
 
-	$ paru -S android-tools asp bluez-utils bluez brave-bin ccache libvirt edk2-omvf dnsmasq iptables-nft virt-manager \
-        flatpak flatseal gdb glib goverlay-bin heroic-games-launcher-bin hunspell-en_gb libreoffice-fresh hyphen-en \
-        wireless-regdb jdk-openjdk man-db mangohud-git meld micro mpd neofetch pfetch nerd-fonts-cascadia-code \
-        nerd-fonts-fira-code nerd-fonts-jetbrains-mono nerd-fonts-sf-mono obs-studio papirus-icon-theme pdfarranger \
-        proton-ge-custom-bin protontricks qt5ct reflector switcheroo-control teams-insiders tangram timeshift timeshift-autosnap \
-        uget visual-studio-code-bin wine-stable wine-gecko wine-mono bottles gamemode firewalld
-
-Install ucode packages for your CPU (replace amd with intel if you have an intel CPU)
-
-	$ paru -S amd-ucode
+	$ paru -S brave-bin heroic-games-launcher-bin pfetch nerd-fonts-cascadia-code \
+        nerd-fonts-fira-code nerd-fonts-jetbrains-mono nerd-fonts-sf-mono switcheroo-control \
+	teams-insiders tangram timeshift timeshift-autosnap visual-studio-code-bin
 
 Exit user account
 
 	$ exit
+	
+Install microcode packages for your CPU (replace amd with intel if you have an intel CPU)
+
+	$ sudo pacman -S amd-ucode
+
+Add ``$USER`` to ``libvirt`` group
+
+	$ usermod -aG libvirt $USER
 
 ### ``Initramfs`` changes
 
@@ -449,9 +452,13 @@ Uncomment the line and the ``Include`` statement that follows. It should look li
 	Include = /etc/pacman.d/mirrorlist
 	...
 
-**Warning:** Users need to be certain that their SSD supports TRIM before attempting to use it. Data loss can occur otherwise!
+Install packages having dependencies on multilib repo
+
+	$ paru -S wine-staging wine-gecko wine-mono winetricks bottles proton-ge-custom-bin
 
 ### Disk Improvements
+
+**Warning:** Users need to be certain that their SSD supports TRIM before attempting to use it. Data loss can occur otherwise!
 
 To verify TRIM support, run:
 
