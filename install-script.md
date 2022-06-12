@@ -420,7 +420,7 @@ Generate initramfs
 	
 	resume=UUID=uuid-of-swap-partition
 
-To dind the UUID of the swap partition run
+To find the UUID of the swap partition run
 
 	$ blkid
 
