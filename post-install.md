@@ -285,6 +285,25 @@ Initrd must be regenerated after changing the theme for it to take affect with t
 
 **NOTE:** On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set ``ShowDelay`` to an interval (in seconds) longer than your boot time to prevent this.
 
+## Customize grub
+
+Download catpuccin theme for grub (you can search for other themes on google and follow those steps)
+
+        $ cd ~/Downloads && git clone https://github.com/catppuccin/grub.git && cd grub
+        $ sudo cp -r src/* /usr/share/grub/themes/
+        
+Uncomment and edit ``GRUB_THEME``option in ``/etc/default/grub`` like
+
+        $ sudo nano /etc/default/grub
+
+And change the line to:
+
+        GRUB_THEME="/usr/share/grub/themes/catppuccin-mocha-grub-theme/theme.txt"
+        
+Update grub
+
+        $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+
 ## Adding entensions to Gnome
 
 To add and work with extensions on gnome first install the native connector for extentions to work
