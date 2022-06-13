@@ -299,7 +299,7 @@ Use ``paru`` to install essential packages from AUR
 
 	$ paru -S brave-bin heroic-games-launcher-bin pfetch nerd-fonts-cascadia-code \
         nerd-fonts-fira-code nerd-fonts-jetbrains-mono nerd-fonts-sf-mono switcheroo-control \
-	teams-insiders tangram timeshift timeshift-autosnap visual-studio-code-bin
+	teams-insiders tangram timeshift visual-studio-code-bin
 
 Exit user account
 
@@ -450,7 +450,9 @@ Uncomment the line and the ``Include`` statement that follows. It should look li
 
 Install packages having dependencies on multilib repo
 
+	$ su $USER
 	$ paru -Sy wine-staging wine-gecko wine-mono winetricks bottles proton-ge-custom-bin
+	$ exit
 
 ### Disk Improvements
 
@@ -494,6 +496,12 @@ Install Gnome specific packages:
 	$ su $USER
 	$ paru -S clapper chrome-gnome-shell extension-manager fractal fragments gdm-settings-git dynamic-wallpaper \
         gnome-software-packagekit-plugin gnome-text-editor networkmanager-openvpn
+	$ exit
+	
+### Install timeshift-autosnap
+
+	$ su $USER
+	$ paru -S timeshift-autosnap
 	$ exit
 
 ### Disable root password
