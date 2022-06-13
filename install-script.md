@@ -451,7 +451,7 @@ Uncomment the line and the ``Include`` statement that follows. It should look li
 Install packages having dependencies on multilib repo
 
 	$ su $USER
-	$ paru -Sy wine-staging wine-gecko wine-mono winetricks bottles proton-ge-custom-bin
+	$ paru -Sy wine-staging wine-gecko wine-mono winetricks bottles vkd3d proton-ge-custom-bin
 	$ exit
 
 ### Disk Improvements
