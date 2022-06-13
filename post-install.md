@@ -130,6 +130,7 @@ Open ``timeshift`` and complete the initial setup
 For ``timeshift-autosnap`` backups appearing in grub automatically install ``grub-btrfs``
 
         $ sudo pacman -S grub-btrfs
+        $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ## Setup specific for Dell G5 SE 
 
