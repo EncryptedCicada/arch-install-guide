@@ -424,7 +424,7 @@ Generate initramfs
 
 	Edit the ``GRUB_CMDLINE_LINUX_DEFAULT`` line like
 
-		GRUB_CMDLINE_LINUX_DEFAULT="root="LABEL=system" rw rootflags=subvol=/@ quiet splash vt.global_cursor_default=0 loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3"
+		GRUB_CMDLINE_LINUX_DEFAULT="quiet splash vt.global_cursor_default=0 loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3"
 
 	Regenerate the config
 
