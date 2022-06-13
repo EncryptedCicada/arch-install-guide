@@ -432,11 +432,7 @@ Generate initramfs
 
 **General TIP 2:** If your system supports hibernate (suspend-to-disk) add the following line to your kernel command line parameters before logging specifiers like ``quiet/splash``.
 	
-	resume=UUID=uuid-of-swap-partition
-
-To find the UUID of the swap partition run
-
-	$ blkid
+	resume=/dev/swap-partition
 
 ### Enable extra repos
 
