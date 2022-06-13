@@ -2,6 +2,10 @@
 
 ### These are my instructions/steps to customize your setup.
 
+## Install more packages for gnome
+
+        $ sudo pacman -S gnome-software-packagekit-plugin networkmanager-openvpn
+
 ## Aesthetic pacman output
 
 Edit ``/etc/pacman.conf`` and append/uncomment the following lines under ``#Misc options``
@@ -305,3 +309,14 @@ Alternatively you can do the following:
 6. [Gamemode](https://extensions.gnome.org/extension/1852/gamemode/)
 
 _TIP:_ Visit github pages of respective extensions to know more
+
+## Install flatpaks for some applications
+
+Search for each package in the gnome software app and install from there
+
+        clapper
+        fractal
+        fragments
+        gdm settings
+        dynamic wallpaper
+        gnome text editor
