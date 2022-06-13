@@ -304,6 +304,35 @@ Update grub
 
         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
+## Keychron keyboards setup
+
+**For Fn row fix**
+
+Create and edit ``hid_apple.conf`` in ``/etc/modprobe.d``
+
+        $ sudo touch /etc/modprobe.d/hid_apple.conf
+        $ sudo nano /etc/modprobe.d/hid_apple.conf
+        
+Add the following lines to the file 
+
+        options hid_apple fnmode=2
+        
+Regenerate initramfs
+        
+        $ sudo mkinitcpio -P
+
+**For enabling bluetooth fast connect**
+
+Uncomment and set line ``FastConnectable`` in ``/etc/bluetooth/main.conf`` to ``true``
+
+        $ sudo nano /etc/bluetooth/main.conf
+        
+The line should look like:
+
+        FastConnectable = true
+        
+_Reboot for the changes to take effect_
+
 ## Adding entensions to Gnome
 
 To add and work with extensions on gnome first install the native connector for extentions to work
