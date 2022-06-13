@@ -307,7 +307,7 @@ Exit user account
 	
 Install microcode packages for your CPU (replace amd with intel if you have an intel CPU)
 
-	$ sudo pacman -S amd-ucode
+	$ pacman -S amd-ucode
 
 Add ``$USER`` to ``libvirt`` group
 
