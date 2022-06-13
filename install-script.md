@@ -493,10 +493,6 @@ Enable the display manager (replace 'gdm' with your desktop specific login manag
 Install Gnome specific packages:
 
 	$ pacman -S geary gnome-connections gnome-mines gnome-sound-recorder gnome-tweaks gnome-usage power-profiles-daemon
-	$ su $USER
-	$ paru -S clapper chrome-gnome-shell extension-manager fractal fragments gdm-settings-git dynamic-wallpaper \
-        gnome-software-packagekit-plugin gnome-text-editor networkmanager-openvpn
-	$ exit
 	
 ### Install timeshift-autosnap
 
