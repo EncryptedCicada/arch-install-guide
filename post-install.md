@@ -83,7 +83,7 @@ _TIP:_ If you want garuda like ``zsh`` or ``fish`` shell prompt, copy file ``sta
 
 Get necessary packages for customizing terminal
 
-        $ paru -S starship nerd-fonts-complete
+        $ paru -S starship ttf-iosevka-nerd
 
 To setup starship prompt on bash do:
 
