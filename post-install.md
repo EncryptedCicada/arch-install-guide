@@ -109,9 +109,10 @@ Open terminal and run
 Append the following lines to the file
 
         --save /etc/pacman.d/mirrorlist
-        --country India,Pakistan
-        --protocol https
+        --country India,Pakistan,China,Hong\ Kong,Bangladesh,Singapore,
+        --protocol http,https
         --latest 5
+        --age 12
 
 Save and close the file.
 
