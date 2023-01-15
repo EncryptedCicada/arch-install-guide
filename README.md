@@ -53,6 +53,7 @@ To restart safely in the event of a freeze you may want to enable SysRq on your 
 - Expand the guide to cover more tweaks and improvements.
   - [x] Add instructions to enable native wayland support in browsers
   - [x] Include bash prompt customisation instructions (using starship)
+  - [ ] Include zsh install instructions and simple customization using prezto
   - [ ] Include instructions to setup encryption
 
 ## Disclaimer:warning:
