@@ -434,6 +434,10 @@ Generate initramfs
 	
 	resume=/dev/swap-partition
 
+**General TIP 3:** If your system has an AMD CPU, Zen2 and above (please check for prerequisites on google), and you want to enable AMD P-State driver, add amd_pstate=active to the commandline. It is recommended to install the `linux-zen` kernel and `linux-zen-headers` packages to use AMD P-State and make the following changes to separate loader entry files for this kernel.
+	
+	options root="LABEL=system" rw rootflags=subvol=/@ quiet ... rd.udev.log_level=3 amd_pstate=active
+
 ### Enable extra repos
 
 Enable ``multilib`` repo
