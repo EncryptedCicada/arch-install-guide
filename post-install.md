@@ -1,4 +1,4 @@
-# Post Install Script
+# Post Install Guide
 
 ### These are my instructions/steps to customize your setup.
 
@@ -257,7 +257,7 @@ The resulting line should look like
 
         HOOKS=(base systemd sd-plymouth ...)
 
-The Kernel Command line must have the following parameters (already set during [installing the bootloader](https://github.com/EncryptedCicada/arch-install-guide/blob/main/install-script.md#installing-bootloader) in ``Install Script``):
+The Kernel Command line must have the following parameters (already set during [installing the bootloader](https://github.com/EncryptedCicada/arch-install-guide/blob/main/install.md#installing-bootloader) in ``Install Guide``):
 
         quiet splash vt.global_cursor_default=0
 
