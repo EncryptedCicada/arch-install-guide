@@ -1,4 +1,4 @@
-# Install Script
+# Install Guide
 ### Prerequisites:
 - ArchLinux bootable USB
 - Working internet connection
@@ -529,4 +529,4 @@ Alternatively, to shutdown
 
 Remember to remove the installation medium and then login into the new system with the user/root account.
 
-Proceed to the [post-install](https://github.com/EncryptedCicada/arch-install-guide/blob/main/post-install.md) script to continue.
+Proceed to the [post-install](https://github.com/EncryptedCicada/arch-install-guide/blob/main/post-install.md) guide to continue.
