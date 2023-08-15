@@ -25,55 +25,35 @@ To set `Xsh` as default shell where `X` can be fi/z/da etc shell prefixes for fi
         
         $ chsh -s /usr/bin/Xsh
 
-_TIP:_ For a barely modified fish shell copy needed contents from `config.fish` file in this repository and add them to the end of `~/.config/fish/config.fish`
+_TIP:_ For a barely modified fish shell copy needed contents from `config.fish` file in this repository and add them to the end of `~/.config/fish/config.fish`. If you want garuda like `fish` shell prompt, copy file `starship.toml` from config folder of this repository and paste it in `~/.config` on your PC (requires `starship` package to be installed).
 
-If installing `zsh`, do:
+For installing `zsh` or any other shell (bash is preinstalled), do (replace zsh with shell name):
 
-        $ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
+        $ paru -S zsh
 
-For the changes to take effect, Logout and login once and open terminal again to go through the setup for zsh (select defaults to start with)
+For the changes to take effect, Logout and login once. For `zsh` go through the setup  and select defaults to start with.
 
-Edit `.zshrc`
+## Customizing zsh shell using [`prezto`](https://github.com/sorin-ionescu/prezto/tree/master)
 
-        $ nano ~/.zshrc
+Get necessary packages for customizing shell
 
-Append the following lines at the respective sections or at the end of the file
+        $ paru -S prezto-git
 
-        ## Plugins section: Enable fish style features
-        # Use syntax highlighting
-        source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+Make sure the current working directory is the home directory using:
 
-        # Use autosuggestion
-        source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+        $ cd ~
 
-        #Use history substring search
-        source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+Edit and add the following lines to the `.zpreztorc` file:
 
-        # Use fzf
-        source /usr/share/fzf/key-bindings.zsh
-        source /usr/share/fzf/completion.zsh
+        zstyle ':prezto:load' pmodule 'node' 'history' 'syntax-highlighting' 'history-substring-search' 'autosuggestions' 'utility' 'git' 'node' 'completion' 'prompt'
+        zstyle ':prezto:module:prompt' theme 'pure'
+        zstyle ':prezto:module:terminal' auto-title 'yes'
 
-        # Arch Linux command-not-found support, you must have package pkgfile installed
-        # https://wiki.archlinux.org/index.php/Pkgfile#.22Command_not_found.22_hook
-        [[ -e /usr/share/doc/pkgfile/command-not-found.zsh ]] && source /usr/share/doc/pkgfile/command-not-found.zsh
+It is recommended to restart your PC for the changes to take effect. Please refer to prezto repository for instruction on how to change themes and customise other aspects of the shell.
 
-        # Run neofetch at start
-        if [ -f /usr/bin/neofetch ]
-        then
-                neofetch
-        fi
+## Customizing bash prompt using [`starship`](https://starship.rs/)
 
-        # Activate starship prompt if present
-        if [ -f /usr/bin/starship ]
-        then
-                eval "$(starship init zsh)"
-        fi
-
-_TIP:_ If you want garuda like `zsh` or `fish` shell prompt, copy file `starship.toml` from config folder of this repository and paste it in `~/.config` on your PC.
-
-## Customizing bash prompt using starship
-
-Get necessary packages for customizing terminal
+Get necessary packages for customizing prompt
 
         $ paru -S starship ttf-iosevka-nerd
 
@@ -112,22 +92,29 @@ Enable reflector service
 
         $ sudo systemctl enable reflector.timer
 
-## Configure timeshift and autosnaps
+To run reflector, do:
 
-Install `timeshift-autosnap` package if not already installed
-
-        $ paru -S timeshift-autosnap
-
-Open `timeshift` and complete the initial setup
-
-For `timeshift-autosnap` backups appearing in grub automatically install `grub-btrfs`
-
-        $ sudo pacman -S grub-btrfs
-        $ sudo grub-mkconfig -o /boot/grub/grub.cfg
+        $ sudo systemctl start reflector.timer
 
 ## Setup specific for Dell G5 SE 
 
-For temperature monitoring and fan control enable the `dell-smm-hwmon` module in kernel
+There are two ways to control fans on this device, [DellG5SE-Fan-Linux](https://github.com/DavidLapous/DellG5SE-Fan-Linux) or [nbfc-linux](https://github.com/nbfc-linux/nbfc-linux). Please read through the sources to check what is best for you.
+
+### To use DellG5SE-Fan-Linux
+
+        $ paru -S dell-g5se-fanctl
+
+And enable the sleep service:
+
+        $ sudo systemctl enable dell-g5se-fanctl-sleep.service
+
+### To use NBFC Linux
+
+Enable the `dell-smm-hwmon` module in kernel by creating the following file:
+
+        $ sudo touch /etc/modules-load.d/dell-smm-hwmon.conf
+
+Open the file for editing
 
         $ sudo nano /etc/modules-load.d/dell-smm-hwmon.conf
         
@@ -137,7 +124,7 @@ Append the following line in the file
 
 Save and exit the file.
 
-Create a `.conf` file
+Create and edit a `.conf` file as follows
 
         $ sudo nano /etc/modprobe.d/dell-smm-hwmon.conf
 
@@ -176,7 +163,7 @@ Enable `nbfc` startup at boot
 
 ## Enable wayland
 
-### For chromium based browsers
+### For chromium based browsers (might be redundant in the future)
 
 - Open browser and enter `chrome://flags` in the `URL`  
 - Change flag `Preferred Ozone platform` to `Auto`
@@ -239,15 +226,15 @@ _TIP:_ Reference `envvars.conf` file is located [here](https://github.com/Encryp
 
 Install necessary packages
 
-        $ paru -S plymouth-git gdm-plymouth
+        $ paru -S plymouth
 
-Append `sd-plymouth` to the `HOOKS` in `/etc/mkinitcpio.conf` after `base` and `systemd` for it to function
+Append `plymouth` to the `HOOKS` in `/etc/mkinitcpio.conf` after `base` and `systemd` for it to function
 
         $ sudo nano /etc/mkinitcpio.conf
 
 The resulting line should look like
 
-        HOOKS=(base systemd sd-plymouth ...)
+        HOOKS=(base systemd plymouth ...)
 
 The Kernel Command line must have the following parameters (already set during [installing the bootloader](https://github.com/EncryptedCicada/arch-install-guide/blob/main/install.md#installing-bootloader) in `Install Guide`):
 
@@ -327,25 +314,22 @@ The line should look like:
 _Reboot for the changes to take effect_
 
 ## Adding entensions to Gnome
-
-To add and work with extensions on gnome first install the native connector for extentions to work
-
-        $ paru -S chrome-gnome-shell
-        
-Install the `extension-manager` app to manage extensions:
+       
+- Install the `extension-manager` app to manage extensions:
 
         $ paru -S extension-manager
 
-Alternatively you can do the following:
+- Alternatively you can install the following package:
 
-- Add the extension to chrome/chromium based browsers from [here](https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep)
-- Go to [extentions.gnome.org](extentions.gnome.org) to add extentions to gnome
+        $ paru -S chrome-gnome-shell
+
+  Subsequently add the extension to chrome/chromium based browsers from [here](https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep), then go to [extentions.gnome.org](extentions.gnome.org) to add extentions to gnome
 
 ### My curated extensions:
 
 1. [Blur My Shell](https://extensions.gnome.org/extension/3193/blur-my-shell/)
 2. [Just Perfection](https://extensions.gnome.org/extension/3843/just-perfection/)
-3. [Espresso](https://extensions.gnome.org/extension/4135/espresso/)
+3. [Caffeine](https://extensions.gnome.org/extension/517/caffeine/)
 4. [Vitals](https://extensions.gnome.org/extension/1460/vitals/)
 5. [GSConnect](https://extensions.gnome.org/extension/1319/gsconnect/)
 6. [Gamemode](https://extensions.gnome.org/extension/1852/gamemode/)
@@ -354,11 +338,10 @@ _TIP:_ Visit github pages of respective extensions to know more
 
 ## Install flatpaks for some applications
 
-Search for each package in the gnome software app and install from there
+Search for each package in the gnome software app and install from there.
 
-        clapper
-        fractal
-        fragments
-        gdm settings
-        dynamic wallpaper
-        gnome text editor
+Some useful application:
+
+- Clapper
+- Fragments
+- Login Manager Settings
