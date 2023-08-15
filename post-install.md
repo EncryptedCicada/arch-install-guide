@@ -2,13 +2,13 @@
 
 ### These are my instructions/steps to customize your setup.
 
-## Install more packages for gnome
+## Install openvpn add-on for gnome network settings
 
-        $ sudo pacman -S gnome-software-packagekit-plugin networkmanager-openvpn
+        $ sudo pacman -S networkmanager-openvpn
 
 ## Aesthetic pacman output
 
-Edit ``/etc/pacman.conf`` and append/uncomment the following lines under ``#Misc options``
+Edit `/etc/pacman.conf` and append/uncomment the following lines under `#Misc options`
 
         ...
         ILoveCandy
@@ -17,31 +17,23 @@ Edit ``/etc/pacman.conf`` and append/uncomment the following lines under ``#Misc
         ParallelDownloads = 5
         ...
 
-**Note:** ``ParallelDownloads`` should be uncommented only if your internet speed is good enough to handle it. It can be incremented/decremented based on your system.
+**Note:** `ParallelDownloads` should be uncommented only if your internet speed is good enough to handle it. It can be incremented/decremented based on your system.
 
 ## Changing system shell
 
-To set ``Xsh`` as default shell where ``X`` can be fi/z/da etc shell prefixes for fish/zsh/dash, do:
+To set `Xsh` as default shell where `X` can be fi/z/da etc shell prefixes for fish/zsh/dash, do:
         
         $ chsh -s /usr/bin/Xsh
 
-_TIP:_ For a barely modified fish shell copy needed contents from ``config.fish`` file in this repository and add them to the end of ``~/.config/fish/config.fish``
+_TIP:_ For a barely modified fish shell copy needed contents from `config.fish` file in this repository and add them to the end of `~/.config/fish/config.fish`
 
-For fish or zsh shell also install ``pkgfile``
-        
-        $ sudo pacman -S pkgfile
-
-Start ``pkgfile`` autoupdate timer	
-
-        $ sudo systemctl enable pkgfile-update.timer
-
-If installing ``zsh``, do:
+If installing `zsh`, do:
 
         $ paru -S zsh fzf zsh-syntax-highlighting zsh-autosuggestions zsh-completions zsh-history-substring-search pkgfile
 
 For the changes to take effect, Logout and login once and open terminal again to go through the setup for zsh (select defaults to start with)
 
-Edit ``.zshrc``
+Edit `.zshrc`
 
         $ nano ~/.zshrc
 
@@ -77,7 +69,7 @@ Append the following lines at the respective sections or at the end of the file
                 eval "$(starship init zsh)"
         fi
 
-_TIP:_ If you want garuda like ``zsh`` or ``fish`` shell prompt, copy file ``starship.toml`` from config folder of this repository and paste it in ``~/.config`` on your PC.
+_TIP:_ If you want garuda like `zsh` or `fish` shell prompt, copy file `starship.toml` from config folder of this repository and paste it in `~/.config` on your PC.
 
 ## Customizing bash prompt using starship
 
@@ -94,7 +86,7 @@ Append the lines at the end of the file
 
         eval "$(starship init bash)"
 
-Save and exit (``Ctrl+X`` followed by ``Shift+Y`` and ``RETURN``). This takes effect on subsequent terminal launches (Reboot preferred)
+Save and exit (`Ctrl+X` followed by `Shift+Y` and `RETURN`). This takes effect on subsequent terminal launches (Reboot preferred)
 
 _TIP:_ See more presets [here](https://starship.rs/presets/).
 
@@ -122,20 +114,20 @@ Enable reflector service
 
 ## Configure timeshift and autosnaps
 
-Install ``timeshift-autosnap`` package if not already installed
+Install `timeshift-autosnap` package if not already installed
 
         $ paru -S timeshift-autosnap
 
-Open ``timeshift`` and complete the initial setup
+Open `timeshift` and complete the initial setup
 
-For ``timeshift-autosnap`` backups appearing in grub automatically install ``grub-btrfs``
+For `timeshift-autosnap` backups appearing in grub automatically install `grub-btrfs`
 
         $ sudo pacman -S grub-btrfs
         $ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ## Setup specific for Dell G5 SE 
 
-For temperature monitoring and fan control enable the ``dell-smm-hwmon`` module in kernel
+For temperature monitoring and fan control enable the `dell-smm-hwmon` module in kernel
 
         $ sudo nano /etc/modules-load.d/dell-smm-hwmon.conf
         
@@ -145,7 +137,7 @@ Append the following line in the file
 
 Save and exit the file.
 
-Create a ``.conf`` file
+Create a `.conf` file
 
         $ sudo nano /etc/modprobe.d/dell-smm-hwmon.conf
 
@@ -154,7 +146,7 @@ Add the following lines in the file before saving and exiting
         # This file must be at /etc/modprobe.d/
         options dell-smm-hwmon restricted=0 ignore_dmi=1
 
-Install ``nbfc-linux`` for fan control
+Install `nbfc-linux` for fan control
         
         $ paru -S dmidecode nbfc-linux
 
@@ -166,17 +158,17 @@ Find the config file
 
         $ ls | grep "Dell\ G5\ SE\ 5505.json"
 
-If the output is like ``Dell G5 SE 5505.json`` then skip this step otherwise do:
+If the output is like `Dell G5 SE 5505.json` then skip this step otherwise do:
 
         $ sudo wget https://raw.githubusercontent.com/EncryptedCicada/arch-install-guide-Dell-G5-SE/main/config/nbfc-linux/Dell%20G5%20SE%205505.json
         $ cd ~/
 
-Set the config and start ``nbfc``
+Set the config and start `nbfc`
 
         $ sudo nbfc config --set "Dell G5 SE 5505"
         $ sudo nbfc start
 
-Enable ``nbfc`` startup at boot
+Enable `nbfc` startup at boot
 
         $ sudo systemctl enable nbfc_service
 
@@ -186,9 +178,9 @@ Enable ``nbfc`` startup at boot
 
 ### For chromium based browsers
 
-- Open browser and enter ``chrome://flags`` in the ``URL``  
-- Change flag ``Preferred Ozone platform`` to ``Auto``
-- If using pipewire (we are, in this guide) also change ``WebRTC PipeWire support`` to ``Enabled``
+- Open browser and enter `chrome://flags` in the `URL`  
+- Change flag `Preferred Ozone platform` to `Auto`
+- If using pipewire (we are, in this guide) also change `WebRTC PipeWire support` to `Enabled`
 
 ### For Firefox
 
@@ -198,19 +190,19 @@ If the folder doesn't exist make it with
         
         $ cd ~/ && mkdir .config && cd .config
 
-Check if ``environment.d`` folder exists with ``$ ls | grep "environment.d"``
+Check if `environment.d` folder exists with `$ ls | grep "environment.d"`
 
-If it doesn't exists then make the directory with ``$ mkdir environment.d``
+If it doesn't exists then make the directory with `$ mkdir environment.d`
         
 Enter the directory
         
         $ cd environment.d
 
-Check if ``envvars.conf`` exists with ``$ ls | grep "envvars.conf"``
+Check if `envvars.conf` exists with `$ ls | grep "envvars.conf"`
 
-If it doesn't exist then make file with ``$ touch envvars.conf``
+If it doesn't exist then make file with `$ touch envvars.conf`
 
-Edit the ``envvars.conf`` file
+Edit the `envvars.conf` file
 
         $ nano envvars.conf
 
@@ -218,7 +210,7 @@ Add the following line
 
         MOZ_ENABLE_WAYLAND=1
 
-**NOTE:** No other display managers except ``GDM`` (for Gnome) and ``SDDM`` (for KDE Plasma) supporting Wayland sessions provide support for sourcing systemd user environment variables yet. Hence, this method can only work with Gnome or KDE Plasma.
+**NOTE:** No other display managers except `GDM` (for Gnome) and `SDDM` (for KDE Plasma) supporting Wayland sessions provide support for sourcing systemd user environment variables yet. Hence, this method can only work with Gnome or KDE Plasma.
         
 ## Install ccache
 
@@ -241,7 +233,7 @@ Append the following lines to the file
         QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt/plugins
         QT_QPA_PLATFORMTHEME=qt5ct
 
-_TIP:_ Reference ``envvars.conf`` file is located [here](https://github.com/EncryptedCicada/arch-install-guide-Dell-G5-SE/raw/main/config/environment.d/envvars.conf)
+_TIP:_ Reference `envvars.conf` file is located [here](https://github.com/EncryptedCicada/arch-install-guide-Dell-G5-SE/raw/main/config/environment.d/envvars.conf)
 
 ## Setup plymouth
 
@@ -249,7 +241,7 @@ Install necessary packages
 
         $ paru -S plymouth-git gdm-plymouth
 
-Append `sd-plymouth` to the ``HOOKS`` in ``/etc/mkinitcpio.conf`` after ``base`` and ``systemd`` for it to function
+Append `sd-plymouth` to the `HOOKS` in `/etc/mkinitcpio.conf` after `base` and `systemd` for it to function
 
         $ sudo nano /etc/mkinitcpio.conf
 
@@ -257,7 +249,7 @@ The resulting line should look like
 
         HOOKS=(base systemd sd-plymouth ...)
 
-The Kernel Command line must have the following parameters (already set during [installing the bootloader](https://github.com/EncryptedCicada/arch-install-guide/blob/main/install.md#installing-bootloader) in ``Install Guide``):
+The Kernel Command line must have the following parameters (already set during [installing the bootloader](https://github.com/EncryptedCicada/arch-install-guide/blob/main/install.md#installing-bootloader) in `Install Guide`):
 
         quiet splash vt.global_cursor_default=0
 
@@ -269,7 +261,7 @@ See all installed themes with
 
         $ plymouth-set-default-theme -l
 
-Change the default theme(``spinner``) with something else by editing the ``plymouthd.conf`` located in ``/etc/plymouth/`` to your theme listed by the previous command
+Change the default theme(`spinner`) with something else by editing the `plymouthd.conf` located in `/etc/plymouth/` to your theme listed by the previous command
 
         $ sudo nano /etc/plymouth/plymouthd.conf
 
@@ -280,11 +272,11 @@ Example setup can be like:
         ShowDelay=0
         DeviceTimeout=8
 
-Initrd must be regenerated after changing the theme for it to take affect with the following command (change ``sweet-arch`` to the theme you're setting)
+Initrd must be regenerated after changing the theme for it to take affect with the following command (change `sweet-arch` to the theme you're setting)
 
         $ sudo plymouth-set-default-theme -R sweet-arch
 
-**NOTE:** On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set ``ShowDelay`` to an interval (in seconds) longer than your boot time to prevent this.
+**NOTE:** On systems that boot quickly, you may only see a flicker of your splash theme before your DM or login prompt is ready. You can set `ShowDelay` to an interval (in seconds) longer than your boot time to prevent this.
 
 ## Customize grub
 
@@ -293,7 +285,7 @@ Download catpuccin theme for grub (you can search for other themes on google and
         $ cd ~/Downloads && git clone https://github.com/catppuccin/grub.git && cd grub
         $ sudo cp -r src/* /usr/share/grub/themes/
         
-Uncomment and edit ``GRUB_THEME``option in ``/etc/default/grub`` like
+Uncomment and edit `GRUB_THEME`option in `/etc/default/grub` like
 
         $ sudo nano /etc/default/grub
 
@@ -309,7 +301,7 @@ Update grub
 
 **For Fn row fix**
 
-Create and edit ``hid_apple.conf`` in ``/etc/modprobe.d``
+Create and edit `hid_apple.conf` in `/etc/modprobe.d`
 
         $ sudo touch /etc/modprobe.d/hid_apple.conf
         $ sudo nano /etc/modprobe.d/hid_apple.conf
@@ -324,7 +316,7 @@ Regenerate initramfs
 
 **For enabling bluetooth fast connect**
 
-Uncomment and set line ``FastConnectable`` in ``/etc/bluetooth/main.conf`` to ``true``
+Uncomment and set line `FastConnectable` in `/etc/bluetooth/main.conf` to `true`
 
         $ sudo nano /etc/bluetooth/main.conf
         
@@ -340,7 +332,7 @@ To add and work with extensions on gnome first install the native connector for 
 
         $ paru -S chrome-gnome-shell
         
-Install the ``extension-manager`` app to manage extensions:
+Install the `extension-manager` app to manage extensions:
 
         $ paru -S extension-manager
 
