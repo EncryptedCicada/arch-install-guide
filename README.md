@@ -2,6 +2,8 @@
 
 This guide aims to be the all-in-one beginner's setup guide for a non nerd who just wants an arch system setup and running with a little bit of eye candy too. It comes with all the info and commands with examples and notes to educate the user about the consecuences and affects of their commands. This is a personalized guide which can easily be modified where it needs to be and the steps for the same are mentioned within the guide. If in any way the end user gets hung up, he/she may visit [wiki.archlinux.org](https://wiki.archlinux.org)!
 
+To start with the guide go to [`install.md`](https://github.com/EncryptedCicada/arch-install-guide/blob/main/install.md)
+
 ## Table of contents
 * [General info](#general-info)
 * [Reference specs](#my-laptop-specs)
